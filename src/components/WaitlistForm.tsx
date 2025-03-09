@@ -82,10 +82,14 @@ const WaitlistForm = () => {
   
   return (
     <section id="waitlist" className="py-20 md:py-32 relative">
-      {/* Spotlight effect for dark mode */}
+      {/* Enhanced spotlight effect for dark mode */}
       <div className="absolute inset-0 z-0 overflow-hidden dark:block hidden">
         <div className="absolute top-1/4 left-1/4 w-[40rem] h-[40rem] bg-primary/5 rounded-full blur-[100px] animate-pulse-subtle" />
         <div className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-syncx-purple/5 rounded-full blur-[80px] animate-pulse-subtle" style={{animationDelay: '1s'}} />
+        
+        {/* New enhanced effects */}
+        <div className="enhanced-spotlight left-1/4 top-1/4" />
+        <div className="enhanced-spotlight right-1/4 bottom-1/4" style={{ animationDelay: '7s' }} />
       </div>
       
       {/* Light mode background */}
@@ -97,13 +101,13 @@ const WaitlistForm = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div 
           ref={containerRef}
-          className="max-w-4xl mx-auto waitlist-card bg-white dark:bg-syncx-dark/60 rounded-2xl p-8 md:p-12 shadow-lg border border-border opacity-0"
+          className="max-w-4xl mx-auto waitlist-card bg-white dark:bg-black/60 rounded-2xl p-8 md:p-12 shadow-lg border border-border opacity-0 dark:gradient-border dark:card-shine"
         >
           <div className="text-center mb-10">
             <div className="inline-block bg-primary/10 rounded-full px-4 py-1 mb-4">
               <span className="text-sm font-medium text-primary">Limited Time Offer</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 dark:text-silver-gradient">
               Get Early Access & 50% Off
             </h2>
             <p className="text-lg text-foreground/70">
@@ -116,7 +120,7 @@ const WaitlistForm = () => {
               <div className="mx-auto w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6">
                 <Check className="h-8 w-8 text-green-600 dark:text-green-400" />
               </div>
-              <h3 className="text-2xl font-bold mb-2">You're on the list!</h3>
+              <h3 className="text-2xl font-bold mb-2 dark:text-white">You're on the list!</h3>
               <p className="text-foreground/70 mb-6">
                 We'll notify you as soon as early access is available. In the meantime, spread the word!
               </p>

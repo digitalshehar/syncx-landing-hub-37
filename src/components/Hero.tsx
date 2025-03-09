@@ -32,10 +32,15 @@ const Hero = () => {
 
   return (
     <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
-      {/* Background spotlight effect for dark mode */}
+      {/* Enhanced spotlight effect for dark mode */}
       <div className="absolute inset-0 z-0 overflow-hidden dark:block hidden">
+        {/* Main spotlight */}
         <div className="absolute top-1/3 left-1/3 w-[50rem] h-[50rem] bg-primary/5 rounded-full blur-[120px] animate-pulse-subtle" />
         <div className="absolute bottom-1/3 right-1/3 w-[40rem] h-[40rem] bg-syncx-purple/5 rounded-full blur-[100px] animate-pulse-subtle" style={{animationDelay: '2s'}} />
+        
+        {/* New enhanced spotlight effects */}
+        <div className="enhanced-spotlight left-0 top-0" />
+        <div className="enhanced-spotlight right-0 bottom-0" style={{ animationDelay: '5s', animationDirection: 'reverse' }} />
       </div>
       
       {/* Light mode gradient */}
@@ -54,6 +59,7 @@ const Hero = () => {
             ref={headlineRef}
             className={cn(
               "text-4xl md:text-6xl font-bold tracking-tight text-foreground",
+              "dark:text-silver-gradient",
               "opacity-0"
             )}
             style={{animationDelay: '100ms'}}

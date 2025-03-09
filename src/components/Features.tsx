@@ -51,7 +51,7 @@ const ToolIcon = ({ name, icon, delay }: ToolIconProps) => {
         "opacity-0"
       )}
     >
-      <div className="bg-white dark:bg-syncx-dark/60 shadow-md rounded-xl p-4 w-16 h-16 md:w-20 md:h-20 flex items-center justify-center mb-2">
+      <div className="bg-white dark:bg-black/60 shadow-md rounded-xl p-4 w-16 h-16 md:w-20 md:h-20 flex items-center justify-center mb-2 gradient-border dark:card-shine">
         {icon}
       </div>
       <span className="text-xs md:text-sm font-medium text-foreground/70">{name}</span>
@@ -95,13 +95,13 @@ const Features = () => {
       <div className="container mx-auto px-4">
         <h2 
           ref={headingRef}
-          className="text-3xl md:text-4xl font-bold text-center mb-20 opacity-0"
+          className="text-3xl md:text-4xl font-bold text-center mb-20 opacity-0 dark:text-silver-gradient"
         >
           Everything You Need, <span className="text-primary">Pre-Integrated</span>
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          <div className="bg-white dark:bg-syncx-dark/60 rounded-2xl p-6 shadow-md border border-border transition-all hover:shadow-lg">
+          <div className="bg-white dark:bg-black/60 rounded-2xl p-6 shadow-md border border-border transition-all hover:shadow-lg dark:card-shine gradient-border">
             <div className="bg-primary/10 rounded-xl p-3 w-fit mb-4">
               <Layers className="h-6 w-6 text-primary" />
             </div>
@@ -111,7 +111,7 @@ const Features = () => {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-syncx-dark/60 rounded-2xl p-6 shadow-md border border-border transition-all hover:shadow-lg">
+          <div className="bg-white dark:bg-black/60 rounded-2xl p-6 shadow-md border border-border transition-all hover:shadow-lg dark:card-shine gradient-border">
             <div className="bg-primary/10 rounded-xl p-3 w-fit mb-4">
               <Package className="h-6 w-6 text-primary" />
             </div>
@@ -121,7 +121,7 @@ const Features = () => {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-syncx-dark/60 rounded-2xl p-6 shadow-md border border-border transition-all hover:shadow-lg">
+          <div className="bg-white dark:bg-black/60 rounded-2xl p-6 shadow-md border border-border transition-all hover:shadow-lg dark:card-shine gradient-border">
             <div className="bg-primary/10 rounded-xl p-3 w-fit mb-4">
               <Gauge className="h-6 w-6 text-primary" />
             </div>
@@ -131,7 +131,7 @@ const Features = () => {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-syncx-dark/60 rounded-2xl p-6 shadow-md border border-border transition-all hover:shadow-lg">
+          <div className="bg-white dark:bg-black/60 rounded-2xl p-6 shadow-md border border-border transition-all hover:shadow-lg dark:card-shine gradient-border">
             <div className="bg-primary/10 rounded-xl p-3 w-fit mb-4">
               <Database className="h-6 w-6 text-primary" />
             </div>

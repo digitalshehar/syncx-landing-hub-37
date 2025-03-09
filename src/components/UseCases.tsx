@@ -30,11 +30,11 @@ const UseCases = () => {
     <section 
       id="use-cases" 
       ref={sectionRef}
-      className="py-20 md:py-32 bg-secondary/50 clip-path-slant opacity-0"
+      className="py-20 md:py-32 bg-secondary/50 dark:bg-black/30 clip-path-slant opacity-0"
     >
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 dark:text-silver-gradient">
             Solutions for <span className="text-primary">Every Team</span>
           </h2>
           <p className="text-lg text-foreground/70">
@@ -47,7 +47,7 @@ const UseCases = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 opacity-0"
           style={{animationDelay: '200ms'}}
         >
-          <div className="bg-white dark:bg-syncx-dark/60 rounded-2xl p-8 shadow-md border border-border transition-all hover:shadow-lg hover:translate-y-[-5px]">
+          <div className="bg-white dark:bg-black/60 rounded-2xl p-8 shadow-md border border-border transition-all hover:shadow-lg hover:translate-y-[-5px] dark:gradient-border dark:card-shine">
             <div className="bg-syncx-blue/10 rounded-full p-4 w-fit mb-6">
               <Building2 className="h-8 w-8 text-syncx-blue" />
             </div>
@@ -71,7 +71,7 @@ const UseCases = () => {
             </ul>
           </div>
 
-          <div className="bg-white dark:bg-syncx-dark/60 rounded-2xl p-8 shadow-md border border-border transition-all hover:shadow-lg hover:translate-y-[-5px]">
+          <div className="bg-white dark:bg-black/60 rounded-2xl p-8 shadow-md border border-border transition-all hover:shadow-lg hover:translate-y-[-5px] dark:gradient-border dark:card-shine">
             <div className="bg-syncx-purple/10 rounded-full p-4 w-fit mb-6">
               <Briefcase className="h-8 w-8 text-syncx-purple" />
             </div>
@@ -95,7 +95,7 @@ const UseCases = () => {
             </ul>
           </div>
 
-          <div className="bg-white dark:bg-syncx-dark/60 rounded-2xl p-8 shadow-md border border-border transition-all hover:shadow-lg hover:translate-y-[-5px]">
+          <div className="bg-white dark:bg-black/60 rounded-2xl p-8 shadow-md border border-border transition-all hover:shadow-lg hover:translate-y-[-5px] dark:gradient-border dark:card-shine">
             <div className="bg-syncx-indigo/10 rounded-full p-4 w-fit mb-6">
               <Server className="h-8 w-8 text-syncx-indigo" />
             </div>
