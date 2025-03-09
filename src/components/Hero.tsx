@@ -32,12 +32,18 @@ const Hero = () => {
 
   return (
     <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
+      {/* Background spotlight effect for dark mode */}
+      <div className="absolute inset-0 z-0 overflow-hidden dark:block hidden">
+        <div className="absolute top-1/3 left-1/3 w-[50rem] h-[50rem] bg-primary/5 rounded-full blur-[120px] animate-pulse-subtle" />
+        <div className="absolute bottom-1/3 right-1/3 w-[40rem] h-[40rem] bg-syncx-purple/5 rounded-full blur-[100px] animate-pulse-subtle" style={{animationDelay: '2s'}} />
+      </div>
       
-      {/* Decorative elements */}
-      <div className="absolute top-1/3 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-syncx-purple/10 rounded-full blur-3xl" />
+      {/* Light mode gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none dark:hidden" />
+      
+      {/* Light mode decorative elements */}
+      <div className="absolute top-1/3 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl dark:hidden" />
+      <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-syncx-purple/10 rounded-full blur-3xl dark:hidden" />
       
       <div 
         ref={containerRef} 
@@ -53,7 +59,7 @@ const Hero = () => {
             style={{animationDelay: '100ms'}}
           >
             Deploy Your Open-Source Stack in{' '}
-            <span className="text-primary">Minutes</span>
+            <span className="text-primary dark:text-white">Minutes</span>
             <br />
             Fully Managed. No DevOps Hassle.
           </h1>
@@ -74,7 +80,14 @@ const Hero = () => {
             style={{animationDelay: '500ms'}}
           >
             <a href="#waitlist">
-              <Button size="lg" className="group">
+              <Button 
+                size="lg" 
+                className={cn(
+                  "group",
+                  "dark:bg-white dark:text-black dark:hover:bg-white/90",
+                  "bg-black text-white hover:bg-black/90"
+                )}
+              >
                 Join Waitlist for Early Access
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>

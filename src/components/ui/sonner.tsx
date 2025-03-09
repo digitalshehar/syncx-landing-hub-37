@@ -1,11 +1,11 @@
 
 import { Toaster as Sonner } from "sonner";
+import { useTheme } from "@/components/ThemeProvider";
 
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  // Removed the useTheme hook since it was causing issues and not properly imported
-  const theme = "light"; // Default theme for now
+  const { theme } = useTheme();
 
   return (
     <Sonner
