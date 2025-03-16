@@ -15,7 +15,6 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadProgress, setLoadProgress] = useState(0);
   const [splineLoaded, setSplineLoaded] = useState(false);
-  const [loadingTimeout, setLoadingTimeout] = useState(false);
 
   useEffect(() => {
     // Force dark mode
@@ -38,20 +37,19 @@ const Index = () => {
       setTimeout(() => setIsLoading(false), 400); // Slight delay after 100% for visual smoothness
     }
     
-    // Fallback: If taking too long, continue anyway
+    // If Spline doesn't load within 5 seconds, continue anyway
     const fallbackTimer = setTimeout(() => {
-      if (!splineLoaded || !loadingTimeout) {
-        console.log("Loading timeout - continuing anyway");
+      if (!splineLoaded) {
+        console.log("Spline load timeout - continuing anyway");
         setSplineLoaded(true);
-        setLoadingTimeout(true);
       }
-    }, 8000); // Increase timeout to give more time to load
+    }, 5000);
     
     return () => {
       clearInterval(progressInterval);
       clearTimeout(fallbackTimer);
     };
-  }, [splineLoaded, loadProgress, loadingTimeout]);
+  }, [splineLoaded, loadProgress]);
 
   const handleSplineLoaded = () => {
     console.log("Preloaded Spline scene loaded successfully");
@@ -94,8 +92,8 @@ const Index = () => {
         {isLoading ? (
           <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
             <div className="flex flex-col items-center max-w-md w-full px-6">
-              {/* Preloader for Spline - visible but with reduced opacity */}
-              <div className="absolute h-96 w-96 overflow-hidden opacity-20 pointer-events-none">
+              {/* Hidden preloader for Spline */}
+              <div className="absolute opacity-0 h-0 w-0 overflow-hidden">
                 <SplineScene
                   scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
                   onSceneLoaded={handleSplineLoaded}
@@ -120,7 +118,7 @@ const Index = () => {
                 ></div>
               </div>
               <p className="text-white/60 font-mono text-sm mt-2 self-end">{Math.round(loadProgress)}%</p>
-              <p className="text-white/80 font-mono text-sm mt-4 animate-pulse">Loading 3D Experience...</p>
+              <p className="text-white/80 font-mono text-sm mt-4 animate-pulse">Loading Experience...</p>
             </div>
           </div>
         ) : (

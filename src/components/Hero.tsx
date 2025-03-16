@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,11 +9,9 @@ import { Spotlight } from '@/components/ui/spotlight';
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [splineLoaded, setSplineLoaded] = useState(false);
 
   const handleSplineLoaded = () => {
-    console.log("Spline scene loaded successfully in Hero");
-    setSplineLoaded(true);
+    console.log("Spline scene loaded successfully");
   };
 
   // Animation variants
@@ -43,24 +41,13 @@ const Hero = () => {
 
   // Custom fallback for the 3D component
   const heroFallback = (
-    <div className="w-full h-full flex items-center justify-center backdrop-blur-lg bg-black/30 rounded-xl border border-white/10">
-      <div className="relative p-8 text-center max-w-md">
+    <div className="w-full h-full flex items-center justify-center backdrop-blur-lg bg-white/5 rounded-xl">
+      <div className="relative p-8 text-center">
         <div className="absolute inset-0 bg-black/30 rounded-xl backdrop-blur-sm -z-10"></div>
         
-        <div className="space-y-4">
-          <div className="relative h-16 w-16 mx-auto">
-            <div className="absolute inset-0 rounded-full border-2 border-futuristic-blue/20"></div>
-            <div className="absolute inset-0 rounded-full border-t-2 border-r-2 border-b-2 border-l-2 border-t-futuristic-purple border-r-futuristic-blue border-b-futuristic-neon border-l-transparent animate-spin"></div>
-          </div>
-          
-          <p className="text-white/80 font-mono text-sm">
-            Visualizing your open-source stack
-          </p>
-          
-          {/* Decorative elements */}
-          <div className="absolute top-0 right-0 w-20 h-20 bg-futuristic-blue/10 rounded-full blur-xl"></div>
-          <div className="absolute bottom-0 left-0 w-16 h-16 bg-futuristic-purple/10 rounded-full blur-xl"></div>
-        </div>
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-20 h-20 bg-futuristic-blue/10 rounded-full blur-xl"></div>
+        <div className="absolute bottom-0 left-0 w-16 h-16 bg-futuristic-purple/10 rounded-full blur-xl"></div>
       </div>
     </div>
   );
@@ -147,7 +134,7 @@ const Hero = () => {
               delay: 0.6 
             }}
           >
-            <div className="absolute inset-0 rounded-2xl overflow-hidden border border-white/5">
+            <div className="absolute inset-0 rounded-2xl overflow-hidden">
               <SplineScene 
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
                 className="w-full h-full"
