@@ -67,7 +67,22 @@ const Hero = () => {
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div className="text-center lg:text-left space-y-8">
-            {/* Removed the headline with "Spin up your open-source..." to match the image */}
+            <h1 
+              ref={headlineRef}
+              className={cn(
+                "text-5xl md:text-7xl font-bold tracking-tight",
+                "text-white drop-shadow-lg",
+                "opacity-0 font-mono",
+                "animate-morph"
+              )}
+              style={{animationDelay: '100ms'}}
+            >
+              Spin up your <span className="bg-gradient-to-r from-futuristic-purple to-futuristic-blue bg-clip-text text-transparent">open-source</span> stack in{' '}
+              <span className="relative inline-block">
+                minutes
+                <span className="absolute -top-1 -right-1 h-2 w-2 bg-futuristic-neon rounded-full animate-pulse-glow"></span>
+              </span>
+            </h1>
             <p 
               ref={subheadlineRef}
               className={cn(
