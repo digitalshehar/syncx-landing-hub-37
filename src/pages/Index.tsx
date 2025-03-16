@@ -22,30 +22,31 @@ const Index = () => {
     document.documentElement.classList.add('dark');
     localStorage.setItem('theme', 'dark');
     
-    // Simulate loading progress
+    // Simulate loading progress with faster increments
     const progressInterval = setInterval(() => {
       setLoadProgress(prev => {
-        // Cap at 90% until Spline is loaded
-        const next = Math.min(prev + Math.random() * 10, splineLoaded ? 100 : 90);
+        // Increase progress more quickly
+        const increment = Math.random() * 15; // Increased from 10 to 15
+        // Cap at 95% until Spline is loaded or timeout
+        const next = Math.min(prev + increment, (splineLoaded || loadingTimeout) ? 100 : 95);
         return next;
       });
-    }, 400);
+    }, 300); // Reduced from 400ms to 300ms
     
-    // If Spline loads, set progress to 100% and finish loading
-    if (splineLoaded && loadProgress >= 90) {
+    // If Spline loads or timeout occurs, set progress to 100% and finish loading
+    if ((splineLoaded || loadingTimeout) && loadProgress >= 95) {
       clearInterval(progressInterval);
       setLoadProgress(100);
-      setTimeout(() => setIsLoading(false), 400); // Slight delay after 100% for visual smoothness
+      setTimeout(() => setIsLoading(false), 300); // Reduced from 400ms to 300ms
     }
     
-    // Fallback: If taking too long, continue anyway
+    // Fallback: If taking too long, continue anyway with a shorter timeout
     const fallbackTimer = setTimeout(() => {
-      if (!splineLoaded || !loadingTimeout) {
+      if (!splineLoaded && !loadingTimeout) {
         console.log("Loading timeout - continuing anyway");
-        setSplineLoaded(true);
         setLoadingTimeout(true);
       }
-    }, 8000); // Increase timeout to give more time to load
+    }, 5000); // Reduced from 8000ms to 5000ms
     
     return () => {
       clearInterval(progressInterval);
@@ -94,8 +95,8 @@ const Index = () => {
         {isLoading ? (
           <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
             <div className="flex flex-col items-center max-w-md w-full px-6">
-              {/* Preloader for Spline - visible but with reduced opacity */}
-              <div className="absolute h-96 w-96 overflow-hidden opacity-20 pointer-events-none">
+              {/* Hidden preloader for Spline - load in background but don't render visibly */}
+              <div className="absolute h-0 w-0 overflow-hidden opacity-0">
                 <SplineScene
                   scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
                   onSceneLoaded={handleSplineLoaded}
@@ -113,14 +114,14 @@ const Index = () => {
                   className="h-full rounded-full absolute top-0 left-0 bg-gradient-to-r from-futuristic-neon via-futuristic-blue to-futuristic-purple background-animate"
                   style={{ 
                     width: `${loadProgress}%`, 
-                    transition: 'width 0.5s ease-out',
+                    transition: 'width 0.3s ease-out', // Faster transition
                     backgroundSize: '200% 100%',
                     animation: 'gradient-x 3s ease infinite'
                   }}
                 ></div>
               </div>
               <p className="text-white/60 font-mono text-sm mt-2 self-end">{Math.round(loadProgress)}%</p>
-              <p className="text-white/80 font-mono text-sm mt-4 animate-pulse">Loading 3D Experience...</p>
+              <p className="text-white/80 font-mono text-sm mt-4 animate-pulse">Loading Experience...</p>
             </div>
           </div>
         ) : (

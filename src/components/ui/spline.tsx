@@ -6,6 +6,7 @@ import { ErrorBoundary } from './error-boundary'
 import { Skeleton } from './skeleton'
 import { Loader2 } from 'lucide-react'
 
+// Use dynamic import with a smaller initial chunk
 const Spline = lazy(() => import('@splinetool/react-spline'))
 
 interface SplineSceneProps {
@@ -19,13 +20,26 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
-  const maxRetries = 2;
+  const [loadTimeout, setLoadTimeout] = useState(false);
+  const maxRetries = 1; // Reduced retries for faster fallback
 
   useEffect(() => {
-    // Reset error state when scene URL changes
+    // Reset states when scene URL changes
     setHasError(false);
     setIsLoaded(false);
-  }, [scene]);
+    setLoadTimeout(false);
+    
+    // Set a timeout to show fallback UI if loading takes too long
+    const timeoutId = setTimeout(() => {
+      if (!isLoaded) {
+        console.log("Spline load timeout - continuing with fallback");
+        setLoadTimeout(true);
+        if (onSceneLoaded) onSceneLoaded(); // Trigger onSceneLoaded to continue app flow
+      }
+    }, 4000); // Reduced timeout to 4 seconds
+    
+    return () => clearTimeout(timeoutId);
+  }, [scene, isLoaded, onSceneLoaded]);
 
   const handleSplineLoad = () => {
     console.log("Spline loaded successfully");
@@ -38,13 +52,16 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
     console.error("Spline error:", err);
     setHasError(true);
     
+    // Call onSceneLoaded even on error to prevent blocking the app flow
+    if (onSceneLoaded && !isLoaded) onSceneLoaded();
+    
     // Auto-retry loading if under max retries
     if (retryCount < maxRetries) {
       const timer = setTimeout(() => {
         console.log(`Retrying Spline load (${retryCount + 1}/${maxRetries})...`);
         setRetryCount(prev => prev + 1);
         setHasError(false); // Reset error to trigger reload
-      }, 2000);
+      }, 1500); // Reduced retry delay
       
       return () => clearTimeout(timer);
     }
@@ -55,6 +72,9 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
     setRetryCount(0);
   };
 
+  // Show fallback UI during loading or if there's an error
+  const shouldShowFallback = !isLoaded || hasError || loadTimeout;
+
   const defaultFallback = (
     <div className="w-full h-full flex items-center justify-center backdrop-blur-lg bg-black/30 rounded-lg p-6">
       <div className="space-y-6 text-center">
@@ -64,7 +84,7 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
           <div className="absolute inset-[25%] rounded-full border-2 border-t-futuristic-neon border-r-transparent border-b-transparent border-l-futuristic-blue animate-spin" style={{ animationDuration: '1.5s', animationDirection: 'reverse' }}></div>
         </div>
         <p className="text-white/80 font-mono animate-pulse">
-          {hasError ? "Loading 3D Experience..." : "Initializing 3D Environment..."}
+          {loadTimeout ? "Optimizing visual experience..." : "Initializing 3D Environment..."}
         </p>
         {hasError && retryCount >= maxRetries && (
           <button 
@@ -93,7 +113,7 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
             />
           )}
         </Suspense>
-        {!isLoaded && (
+        {shouldShowFallback && (
           <div className="absolute inset-0 z-20 flex items-center justify-center">
             {actualFallback}
           </div>

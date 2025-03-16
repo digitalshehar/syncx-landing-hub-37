@@ -10,11 +10,23 @@ import { Spotlight } from '@/components/ui/spotlight';
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [splineLoaded, setSplineLoaded] = useState(false);
+  const [showOptimizedFallback, setShowOptimizedFallback] = useState(false);
 
   const handleSplineLoaded = () => {
     console.log("Spline scene loaded successfully in Hero");
     setSplineLoaded(true);
   };
+
+  // Set a timeout to show optimized fallback if Spline takes too long
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (!splineLoaded) {
+        setShowOptimizedFallback(true);
+      }
+    }, 3000); // Show optimized fallback after 3 seconds if not loaded
+    
+    return () => clearTimeout(timeoutId);
+  }, [splineLoaded]);
 
   // Animation variants
   const fadeInUp = {
@@ -41,21 +53,32 @@ const Hero = () => {
     }
   };
 
-  // Custom fallback for the 3D component
+  // Optimized fallback for the 3D component - simplified version
   const heroFallback = (
     <div className="w-full h-full flex items-center justify-center backdrop-blur-lg bg-black/30 rounded-xl border border-white/10">
       <div className="relative p-8 text-center max-w-md">
         <div className="absolute inset-0 bg-black/30 rounded-xl backdrop-blur-sm -z-10"></div>
         
         <div className="space-y-4">
-          <div className="relative h-16 w-16 mx-auto">
-            <div className="absolute inset-0 rounded-full border-2 border-futuristic-blue/20"></div>
-            <div className="absolute inset-0 rounded-full border-t-2 border-r-2 border-b-2 border-l-2 border-t-futuristic-purple border-r-futuristic-blue border-b-futuristic-neon border-l-transparent animate-spin"></div>
-          </div>
-          
-          <p className="text-white/80 font-mono text-sm">
-            Visualizing your open-source stack
-          </p>
+          {showOptimizedFallback ? (
+            // Simplified, more performance-friendly fallback
+            <div className="mx-auto w-full max-w-md">
+              <div className="h-40 w-full bg-gradient-to-br from-futuristic-blue/20 to-futuristic-purple/20 rounded-xl mb-4"></div>
+              <div className="h-3 w-3/4 mx-auto bg-futuristic-neon/30 rounded-full mb-2"></div>
+              <div className="h-3 w-1/2 mx-auto bg-futuristic-blue/30 rounded-full"></div>
+            </div>
+          ) : (
+            <>
+              <div className="relative h-16 w-16 mx-auto">
+                <div className="absolute inset-0 rounded-full border-2 border-futuristic-blue/20"></div>
+                <div className="absolute inset-0 rounded-full border-t-2 border-r-2 border-b-2 border-l-2 border-t-futuristic-purple border-r-futuristic-blue border-b-futuristic-neon border-l-transparent animate-spin"></div>
+              </div>
+              
+              <p className="text-white/80 font-mono text-sm">
+                Optimizing visualization...
+              </p>
+            </>
+          )}
           
           {/* Decorative elements */}
           <div className="absolute top-0 right-0 w-20 h-20 bg-futuristic-blue/10 rounded-full blur-xl"></div>
