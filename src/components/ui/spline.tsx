@@ -114,7 +114,7 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
           )}
         </Suspense>
         {shouldShowFallback && (
-          <div className="absolute inset-0 z-20 flex items-center justify-center">
+          <div className="absolute inset-0 z-20">
             {actualFallback}
           </div>
         )}
