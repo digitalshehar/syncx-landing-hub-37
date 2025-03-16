@@ -19,6 +19,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
+				mono: ['JetBrains Mono', 'monospace'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -60,6 +64,15 @@ export default {
 					gray: '#F9FAFB',
 					dark: '#111827',
 					silver: '#c0c0c0'
+				},
+				futuristic: {
+					neon: '#00f2ff',
+					purple: '#8A2BE2',
+					pink: '#FF1493',
+					blue: '#1E90FF',
+					dark: '#0D0F16',
+					silver: '#E0E0E0',
+					glow: '#00FFD1',
 				}
 			},
 			borderRadius: {
@@ -98,6 +111,18 @@ export default {
 				},
 				'shimmer': {
 					'100%': { transform: 'translateX(100%)' }
+				},
+				'rotate-slow': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' }
+				},
+				'pulse-glow': {
+					'0%, 100%': { opacity: '0.6' },
+					'50%': { opacity: '1' }
+				},
+				'morph': {
+					'0%, 100%': { borderRadius: '60% 40% 30% 70%/60% 30% 70% 40%' },
+					'50%': { borderRadius: '30% 60% 70% 40%/50% 60% 30% 60%' }
 				}
 			},
 			animation: {
@@ -107,7 +132,10 @@ export default {
 				'scale-in': 'scale-in 0.3s ease-out forwards',
 				'float': 'float 6s ease-in-out infinite',
 				'pulse-subtle': 'pulse-subtle 3s ease-in-out infinite',
-				'shimmer': 'shimmer 2s infinite'
+				'shimmer': 'shimmer 2s infinite',
+				'rotate-slow': 'rotate-slow 12s linear infinite',
+				'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
+				'morph': 'morph 15s linear infinite'
 			}
 		}
 	},

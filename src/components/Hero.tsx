@@ -1,6 +1,6 @@
 
-import React, { useEffect, useRef } from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowRight, Sparkles, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -9,6 +9,8 @@ const Hero = () => {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subheadlineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const orbitRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -26,29 +28,55 @@ const Hero = () => {
     if (headlineRef.current) observer.observe(headlineRef.current);
     if (subheadlineRef.current) observer.observe(subheadlineRef.current);
     if (ctaRef.current) observer.observe(ctaRef.current);
+    if (orbitRef.current) observer.observe(orbitRef.current);
 
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      setMousePosition({ x, y });
+      
+      // Update CSS variables for spotlight effect
+      document.documentElement.style.setProperty('--x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--y', `${e.clientY}px`);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
-    <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
-      {/* Enhanced spotlight effect for dark mode */}
+    <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden min-h-[90vh] flex items-center">
+      {/* Enhanced spotlights for dark mode */}
       <div className="absolute inset-0 z-0 overflow-hidden dark:block hidden">
-        {/* Main spotlight */}
-        <div className="absolute top-1/3 left-1/3 w-[50rem] h-[50rem] bg-primary/5 rounded-full blur-[120px] animate-pulse-subtle" />
-        <div className="absolute bottom-1/3 right-1/3 w-[40rem] h-[40rem] bg-syncx-purple/5 rounded-full blur-[100px] animate-pulse-subtle" style={{animationDelay: '2s'}} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vh] bg-futuristic-purple/5 blur-[120px] rounded-full animate-pulse-glow"></div>
+        <div className="absolute top-1/3 left-1/3 w-[50vw] h-[50vh] bg-futuristic-blue/5 blur-[100px] rounded-full animate-pulse-glow" style={{ animationDelay: '1s' }}></div>
+        <div className="spotlight"></div>
+      </div>
+      
+      {/* 3D orbital decoration */}
+      <div 
+        ref={orbitRef}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] opacity-0 pointer-events-none"
+        style={{ animationDelay: '800ms' }}
+      >
+        <div className="absolute inset-0 border border-futuristic-neon/10 rounded-full animate-rotate-slow"></div>
+        <div className="absolute inset-0 border border-futuristic-purple/10 rounded-full animate-rotate-slow" style={{ animationDelay: '2s', transform: 'rotate(60deg)' }}></div>
+        <div className="absolute inset-0 border border-futuristic-pink/10 rounded-full animate-rotate-slow" style={{ animationDelay: '4s', transform: 'rotate(120deg)' }}></div>
         
-        {/* New enhanced spotlight effects */}
-        <div className="enhanced-spotlight left-0 top-0" />
-        <div className="enhanced-spotlight right-0 bottom-0" style={{ animationDelay: '5s', animationDirection: 'reverse' }} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 h-2 w-2 bg-futuristic-neon rounded-full animate-pulse-glow"></div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-2 w-2 bg-futuristic-purple rounded-full animate-pulse-glow" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-2 w-2 bg-futuristic-pink rounded-full animate-pulse-glow" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 h-2 w-2 bg-futuristic-glow rounded-full animate-pulse-glow" style={{ animationDelay: '3s' }}></div>
       </div>
       
       {/* Light mode gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none dark:hidden" />
-      
-      {/* Light mode decorative elements */}
-      <div className="absolute top-1/3 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl dark:hidden" />
-      <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-syncx-purple/10 rounded-full blur-3xl dark:hidden" />
       
       <div 
         ref={containerRef} 
@@ -58,16 +86,17 @@ const Hero = () => {
           <h1 
             ref={headlineRef}
             className={cn(
-              "text-4xl md:text-6xl font-bold tracking-tight text-foreground",
-              "dark:text-silver-gradient",
-              "opacity-0"
+              "text-5xl md:text-7xl font-bold tracking-tight text-foreground",
+              "dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-br dark:from-white dark:via-futuristic-silver dark:to-slate-300 leading-tight",
+              "opacity-0 font-mono"
             )}
             style={{animationDelay: '100ms'}}
           >
-            Deploy Your Open-Source Stack in{' '}
-            <span className="text-primary dark:text-white">Minutes</span>
-            <br />
-            Fully Managed. No DevOps Hassle.
+            Deploy Your <span className="bg-gradient-to-r from-futuristic-purple to-futuristic-blue bg-clip-text text-transparent">Open-Source</span> Stack in{' '}
+            <span className="relative">
+              Minutes
+              <span className="absolute -top-1 -right-1 h-2 w-2 bg-futuristic-neon rounded-full animate-pulse-glow"></span>
+            </span>
           </h1>
           <p 
             ref={subheadlineRef}
@@ -82,22 +111,29 @@ const Hero = () => {
           </p>
           <div 
             ref={ctaRef}
-            className={cn("pt-4", "opacity-0")}
+            className={cn("pt-8", "opacity-0")}
             style={{animationDelay: '500ms'}}
           >
-            <a href="#waitlist">
+            <a href="#waitlist" className="relative group inline-block">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-futuristic-purple to-futuristic-blue rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse-glow"></div>
               <Button 
                 size="lg" 
                 className={cn(
-                  "group",
-                  "dark:bg-white dark:text-black dark:hover:bg-white/90",
-                  "bg-black text-white hover:bg-black/90"
+                  "relative",
+                  "dark:bg-black dark:text-white dark:border dark:border-futuristic-neon/30 dark:hover:border-futuristic-neon",
+                  "bg-black text-white hover:bg-black/90",
+                  "px-8 py-6 text-lg"
                 )}
               >
                 Join Waitlist for Early Access
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </a>
+            
+            <div className="mt-8 flex justify-center items-center space-x-2 opacity-70">
+              <Zap size={16} className="text-futuristic-neon" />
+              <span className="text-sm">No credit card required • Cancel anytime</span>
+            </div>
           </div>
         </div>
       </div>
