@@ -107,25 +107,14 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
       <div className="relative w-full h-full overflow-hidden">
         <Suspense fallback={actualFallback}>
           {!hasError && (
-            <>
-              {isMobile ? (
-                <div className="w-full h-full" style={{ pointerEvents: 'none' }}>
-                  <Spline
-                    scene={scene}
-                    className={className}
-                    onLoad={handleSplineLoad}
-                    onError={handleSplineError}
-                  />
-                </div>
-              ) : (
-                <Spline
-                  scene={scene}
-                  className={className}
-                  onLoad={handleSplineLoad}
-                  onError={handleSplineError}
-                />
-              )}
-            </>
+            <div style={{ pointerEvents: isMobile ? 'none' : 'auto' }} className="w-full h-full">
+              <Spline
+                scene={scene}
+                className={className}
+                onLoad={handleSplineLoad}
+                onError={handleSplineError}
+              />
+            </div>
           )}
         </Suspense>
         {shouldShowFallback && (

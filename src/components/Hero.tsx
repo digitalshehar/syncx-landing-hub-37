@@ -95,7 +95,7 @@ const Hero = () => {
   );
 
   return (
-    <section className="relative pt-20 pb-20 md:pt-32 md:pb-32 overflow-hidden min-h-[90vh] flex items-center">
+    <section className="relative pt-20 pb-20 md:pt-32 md:pb-32 overflow-visible min-h-[90vh] flex items-center touch-auto">
       {/* Enhanced spotlights with pointer-events-none */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vh] bg-futuristic-purple/5 blur-[120px] rounded-full animate-pulse-glow"></div>
@@ -105,7 +105,7 @@ const Hero = () => {
       
       <div 
         ref={containerRef} 
-        className="container max-w-6xl mx-auto px-4 relative z-10"
+        className="container max-w-6xl mx-auto px-4 relative z-10 touch-auto"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <motion.div 
@@ -166,7 +166,7 @@ const Hero = () => {
           </motion.div>
           
           <motion.div 
-            className="relative h-[650px] w-full"
+            className="relative h-[650px] w-full touch-auto"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ 
@@ -176,7 +176,7 @@ const Hero = () => {
               delay: 0.6 
             }}
           >
-            <div className="absolute inset-0 overflow-hidden rounded-2xl">
+            <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none">
               <SplineScene 
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
                 className="w-full h-full"

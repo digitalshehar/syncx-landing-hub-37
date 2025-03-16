@@ -59,16 +59,35 @@ const Index = () => {
     setSplineLoaded(true);
   };
 
-  // Add overflow-auto to the body to ensure scrolling works on mobile
+  // Fix scrolling on mobile by making sure the body is scrollable
   useEffect(() => {
-    if (!isLoading) {
-      document.body.classList.add('overflow-auto');
-    } else {
-      document.body.classList.remove('overflow-auto');
-    }
+    // Immediate function to set initial state
+    const setBodyScrollable = () => {
+      if (!isLoading) {
+        document.body.style.overflow = 'auto';
+        document.body.style.height = 'auto';
+        document.body.style.position = 'relative';
+        document.documentElement.style.overflow = 'auto';
+        document.documentElement.style.height = 'auto';
+        
+        // Force layout recalculation
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          window.dispatchEvent(new Event('resize'));
+        }, 100);
+      } else {
+        document.body.style.overflow = 'hidden';
+      }
+    };
+    
+    setBodyScrollable();
     
     return () => {
-      document.body.classList.remove('overflow-auto');
+      document.body.style.overflow = '';
+      document.body.style.height = '';
+      document.body.style.position = '';
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.height = '';
     };
   }, [isLoading]);
 
@@ -87,7 +106,7 @@ const Index = () => {
         </button>
       </div>
     }>
-      <div className="min-h-screen flex flex-col bg-black">
+      <div className="min-h-screen flex flex-col bg-black overflow-x-hidden touch-auto">
         {/* Global unified background */}
         <div className="fixed inset-0 z-0 pointer-events-none">
           <Waves 
@@ -109,7 +128,7 @@ const Index = () => {
           <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
             <div className="flex flex-col items-center max-w-md w-full px-6">
               {/* Hidden preloader for Spline - load in background but don't render visibly */}
-              <div className="absolute h-0 w-0 overflow-hidden opacity-0">
+              <div className="absolute h-0 w-0 overflow-hidden opacity-0 pointer-events-none">
                 <SplineScene
                   scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
                   onSceneLoaded={handleSplineLoaded}
@@ -140,7 +159,7 @@ const Index = () => {
         ) : (
           <>
             <Navbar />
-            <main className="flex-grow relative z-10">
+            <main className="flex-grow relative z-10 touch-auto overflow-auto">
               <Hero />
               <Features />
               <UseCases />
