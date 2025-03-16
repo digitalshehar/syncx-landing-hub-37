@@ -3,10 +3,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ArrowRight, Check, Sparkles, Rocket, Zap } from 'lucide-react';
+import { ArrowRight, Check, Sparkles, Rocket, Zap, AlertCircle } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { addToWaitlist } from '@/lib/supabase';
+import { addToWaitlist, checkEmailExists } from '@/lib/supabase';
 import { cn } from '@/lib/utils';
 
 const WaitlistForm = () => {
@@ -18,6 +18,7 @@ const WaitlistForm = () => {
   const [useCase, setUseCase] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
+  const [validationError, setValidationError] = useState('');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -37,13 +38,34 @@ const WaitlistForm = () => {
     return () => observer.disconnect();
   }, []);
 
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !useCase) {
+    // Reset validation errors
+    setValidationError('');
+    
+    // Validate email
+    if (!validateEmail(email)) {
+      setValidationError('Please enter a valid email address');
       toast({
-        title: "Error",
-        description: "Please fill all fields before submitting.",
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Validate use case
+    if (!useCase) {
+      setValidationError('Please select a use case');
+      toast({
+        title: "Use case required",
+        description: "Please select your primary use case.",
         variant: "destructive",
       });
       return;
@@ -52,13 +74,21 @@ const WaitlistForm = () => {
     setIsSubmitting(true);
     
     try {
-      // For demo purposes, we'll simulate a successful submission
-      // In a real app, you would use the addToWaitlist function
-      // const response = await addToWaitlist(email, useCase);
+      // Check if email exists
+      const emailCheck = await checkEmailExists(email);
       
-      // Simulating API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      const response = { success: true };
+      if (emailCheck.exists) {
+        toast({
+          title: "Already registered",
+          description: "This email is already on our waitlist.",
+          variant: "default",
+        });
+        setIsSuccessful(true);
+        return;
+      }
+      
+      // Add to waitlist
+      const response = await addToWaitlist(email, useCase);
       
       if (response.success) {
         setIsSuccessful(true);
@@ -67,12 +97,17 @@ const WaitlistForm = () => {
           description: "You've been added to our waitlist. We'll be in touch soon!",
         });
       } else {
-        throw new Error('Failed to join waitlist');
+        throw new Error(response.error?.toString() || 'Failed to join waitlist');
       }
     } catch (error) {
+      let errorMessage = 'Failed to join waitlist. Please try again.';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Something went wrong",
-        description: "Failed to join waitlist. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -165,11 +200,20 @@ const WaitlistForm = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="h-12 bg-white/5 dark:bg-black/40 border-white/10 dark:border-white/10 focus:border-futuristic-neon/50 transition-colors backdrop-blur-sm pl-10"
+                      className={cn(
+                        "h-12 bg-white/5 dark:bg-black/40 border-white/10 dark:border-white/10 focus:border-futuristic-neon/50 transition-colors backdrop-blur-sm pl-10",
+                        validationError.includes('email') && "border-destructive"
+                      )}
                     />
                     <div className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/40">
                       @
                     </div>
+                    {validationError.includes('email') && (
+                      <div className="text-destructive text-xs mt-1 flex items-center">
+                        <AlertCircle size={12} className="mr-1" />
+                        Please enter a valid email
+                      </div>
+                    )}
                   </div>
                 </div>
                 
@@ -179,16 +223,29 @@ const WaitlistForm = () => {
                     value={useCase}
                     onValueChange={setUseCase}
                   >
-                    <SelectTrigger id="use-case" className="h-12 bg-white/5 dark:bg-black/40 border-white/10 dark:border-white/10 focus:border-futuristic-neon/50 transition-colors backdrop-blur-sm">
+                    <SelectTrigger 
+                      id="use-case" 
+                      className={cn(
+                        "h-12 bg-white/5 dark:bg-black/40 border-white/10 dark:border-white/10 focus:border-futuristic-neon/50 transition-colors backdrop-blur-sm",
+                        validationError.includes('use case') && "border-destructive"
+                      )}
+                    >
                       <SelectValue placeholder="Select your use case" />
                     </SelectTrigger>
                     <SelectContent className="bg-white/80 dark:bg-black/80 backdrop-blur-md border-white/10 dark:border-white/10">
                       <SelectItem value="startup">Startup</SelectItem>
                       <SelectItem value="devops">DevOps</SelectItem>
                       <SelectItem value="enterprise">Enterprise</SelectItem>
+                      <SelectItem value="individual">Individual Developer</SelectItem>
                       <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
+                  {validationError.includes('use case') && (
+                    <div className="text-destructive text-xs mt-1 flex items-center">
+                      <AlertCircle size={12} className="mr-1" />
+                      Please select a use case
+                    </div>
+                  )}
                 </div>
               </div>
               

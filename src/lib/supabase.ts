@@ -1,9 +1,9 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-// Note: In a production environment, these would be environment variables
-const supabaseUrl = 'https://your-supabase-project.supabase.co';
-const supabaseAnonKey = 'your-supabase-anon-key';
+// Replace these with your actual Supabase project URL and anon key
+const supabaseUrl = process.env.SUPABASE_URL || 'https://your-supabase-project.supabase.co';
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || 'your-supabase-anon-key';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -27,5 +27,22 @@ export const addToWaitlist = async (email: string, useCase: string) => {
       success: false, 
       error: 'Failed to join waitlist. Please try again.' 
     };
+  }
+};
+
+// Utility function to check if email already exists in waitlist
+export const checkEmailExists = async (email: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('waitlist')
+      .select('email')
+      .eq('email', email)
+      .maybeSingle();
+      
+    if (error) throw error;
+    return { exists: !!data, data };
+  } catch (error) {
+    console.error('Error checking email:', error);
+    return { exists: false, error };
   }
 };
