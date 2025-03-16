@@ -33,7 +33,6 @@ const Navbar = () => {
             className="text-2xl font-bold font-mono flex items-center"
           >
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-futuristic-blue to-futuristic-purple mr-1">Syncx</span>
-            <span className="text-white/70">.app</span>
             <div className="ml-1.5 relative">
               <div className="w-1.5 h-1.5 bg-futuristic-neon rounded-full animate-pulse-glow"></div>
             </div>
