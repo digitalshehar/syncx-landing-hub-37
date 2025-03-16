@@ -8,7 +8,6 @@ import WaitlistForm from '@/components/WaitlistForm';
 import Footer from '@/components/Footer';
 import { ErrorBoundary } from '@/components/ui/error-boundary';
 import { Waves } from '@/components/ui/waves-background';
-import { AppDock } from '@/components/AppDock';
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -79,7 +78,6 @@ const Index = () => {
               <WaitlistForm />
             </main>
             <Footer />
-            <AppDock />
           </>
         )}
       </div>

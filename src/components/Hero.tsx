@@ -71,10 +71,9 @@ const Hero = () => {
               ref={headlineRef}
               className={cn(
                 "text-5xl md:text-7xl font-bold tracking-tight",
-                "bg-gradient-to-br from-gray-200/95 via-gray-300/90 to-gray-400/80 bg-clip-text text-transparent",
+                "text-white drop-shadow-lg",
                 "opacity-0 font-mono",
-                "animate-morph",
-                "drop-shadow-[0_5px_15px_rgba(255,255,255,0.15)]"
+                "animate-morph"
               )}
               style={{animationDelay: '100ms'}}
             >
