@@ -166,7 +166,7 @@ const Hero = () => {
           </motion.div>
           
           <motion.div 
-            className={`relative h-[650px] w-full ${isMobile ? 'touch-none' : ''}`}
+            className="relative h-[650px] w-full"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ 
