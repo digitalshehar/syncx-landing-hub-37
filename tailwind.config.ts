@@ -110,6 +110,7 @@ export default {
 					'50%': { opacity: '0.8' }
 				},
 				'shimmer': {
+					'0%': { transform: 'translateX(-100%)' },
 					'100%': { transform: 'translateX(100%)' }
 				},
 				'rotate-slow': {
@@ -123,6 +124,59 @@ export default {
 				'morph': {
 					'0%, 100%': { borderRadius: '60% 40% 30% 70%/60% 30% 70% 40%' },
 					'50%': { borderRadius: '30% 60% 70% 40%/50% 60% 30% 60%' }
+				},
+				'text-gradient': {
+					'0%, 100%': { 
+						backgroundPosition: '0% 50%',
+					},
+					'50%': { 
+						backgroundPosition: '100% 50%',
+					}
+				},
+				'gradient-x': {
+					'0%, 100%': {
+						backgroundPosition: '0% 50%',
+					},
+					'50%': {
+						backgroundPosition: '100% 50%',
+					},
+				},
+				'gradient-y': {
+					'0%, 100%': {
+						backgroundPosition: '50% 0%',
+					},
+					'50%': {
+						backgroundPosition: '50% 100%',
+					},
+				},
+				'gradient-xy': {
+					'0%, 100%': {
+						backgroundPosition: '0% 0%',
+					},
+					'50%': {
+						backgroundPosition: '100% 100%',
+					},
+				},
+				'bg-pan': {
+					'0%': { backgroundPosition: '0% 0%' },
+					'25%': { backgroundPosition: '100% 0%' },
+					'50%': { backgroundPosition: '100% 100%' },
+					'75%': { backgroundPosition: '0% 100%' },
+					'100%': { backgroundPosition: '0% 0%' }
+				},
+				'blur-in': {
+					'0%': { filter: 'blur(12px)', opacity: '0' },
+					'100%': { filter: 'blur(0px)', opacity: '1' }
+				},
+				'blur-out': {
+					'0%': { filter: 'blur(0px)', opacity: '1' },
+					'100%': { filter: 'blur(12px)', opacity: '0' }
+				},
+				'float-slow': {
+					'0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+					'25%': { transform: 'translateY(-5px) rotate(1deg)' },
+					'50%': { transform: 'translateY(0) rotate(0deg)' },
+					'75%': { transform: 'translateY(5px) rotate(-1deg)' }
 				}
 			},
 			animation: {
@@ -135,7 +189,15 @@ export default {
 				'shimmer': 'shimmer 2s infinite',
 				'rotate-slow': 'rotate-slow 12s linear infinite',
 				'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
-				'morph': 'morph 15s linear infinite'
+				'morph': 'morph 15s linear infinite',
+				'text-gradient': 'text-gradient 8s ease infinite',
+				'gradient-x': 'gradient-x 10s ease infinite',
+				'gradient-y': 'gradient-y 10s ease infinite',
+				'gradient-xy': 'gradient-xy 10s ease infinite',
+				'bg-pan': 'bg-pan 30s infinite linear',
+				'blur-in': 'blur-in 0.5s forwards',
+				'blur-out': 'blur-out 0.5s forwards',
+				'float-slow': 'float-slow 8s ease-in-out infinite'
 			}
 		}
 	},
