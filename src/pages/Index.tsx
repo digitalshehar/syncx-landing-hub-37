@@ -59,6 +59,19 @@ const Index = () => {
     setSplineLoaded(true);
   };
 
+  // Add overflow-auto to the body to ensure scrolling works on mobile
+  useEffect(() => {
+    if (!isLoading) {
+      document.body.classList.add('overflow-auto');
+    } else {
+      document.body.classList.remove('overflow-auto');
+    }
+    
+    return () => {
+      document.body.classList.remove('overflow-auto');
+    };
+  }, [isLoading]);
+
   return (
     <ErrorBoundary fallback={
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-slate-900 to-black p-6 text-center">
