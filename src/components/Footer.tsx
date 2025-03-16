@@ -1,9 +1,36 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { Shield, Zap, Code, Globe, ArrowRight, Github, Linkedin, Twitter } from 'lucide-react';
+import { Shield, Zap, Code, Globe, ArrowRight, Github, Linkedin, Twitter, Users } from 'lucide-react';
 
 const Footer = () => {
+  const [visitorCount, setVisitorCount] = useState<number>(0);
+  
+  useEffect(() => {
+    // Get the current visitor count from localStorage or initialize it
+    const getVisitorCount = () => {
+      const storedCount = localStorage.getItem('visitorCount');
+      return storedCount ? parseInt(storedCount) : 0;
+    };
+    
+    // Increment visitor count on page load
+    const incrementVisitorCount = () => {
+      const currentCount = getVisitorCount();
+      const newCount = currentCount + 1;
+      localStorage.setItem('visitorCount', newCount.toString());
+      setVisitorCount(newCount);
+    };
+    
+    // Only increment if this is a new session
+    if (!sessionStorage.getItem('counted')) {
+      incrementVisitorCount();
+      sessionStorage.setItem('counted', 'true');
+    } else {
+      // Just display the current count without incrementing
+      setVisitorCount(getVisitorCount());
+    }
+  }, []);
+
   return (
     <footer className="relative overflow-hidden py-12 md:py-16">
       {/* Glassmorphism container */}
@@ -88,9 +115,13 @@ const Footer = () => {
         </div>
         
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-white/60">
-            © {new Date().getFullYear()} Syncx.app. All rights reserved.
-          </p>
+          <div className="flex items-center text-sm text-white/60">
+            <div className="flex items-center mr-4">
+              <Users className="h-4 w-4 mr-1.5 text-futuristic-neon" />
+              <span className="text-white/80">{visitorCount.toLocaleString()} visitors</span>
+            </div>
+            <p>© {new Date().getFullYear()} Syncx.app. All rights reserved.</p>
+          </div>
           
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a href="#" className="group p-2 rounded-full backdrop-blur-md bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
