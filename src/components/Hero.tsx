@@ -15,10 +15,14 @@ const Hero = () => {
   const handleSplineLoaded = () => {
     console.log("Spline scene loaded successfully in Hero");
     setSplineLoaded(true);
+    // Immediately hide the fallback when Spline is loaded
+    setShowOptimizedFallback(false);
   };
 
-  // Set a timeout to show optimized fallback if Spline takes too long
+  // Only set up the timeout if Spline hasn't loaded yet
   useEffect(() => {
+    if (splineLoaded) return;
+    
     const timeoutId = setTimeout(() => {
       if (!splineLoaded) {
         setShowOptimizedFallback(true);
@@ -56,35 +60,37 @@ const Hero = () => {
   // Optimized fallback for the 3D component - simplified version
   const heroFallback = (
     <div className="w-full h-full flex items-center justify-center backdrop-blur-lg bg-black/30 rounded-xl border border-white/10">
-      <div className="relative p-8 text-center max-w-md">
-        <div className="absolute inset-0 bg-black/30 rounded-xl backdrop-blur-sm -z-10"></div>
-        
-        <div className="space-y-4">
-          {showOptimizedFallback ? (
-            // Simplified, more performance-friendly fallback
-            <div className="mx-auto w-full max-w-md">
-              <div className="h-40 w-full bg-gradient-to-br from-futuristic-blue/20 to-futuristic-purple/20 rounded-xl mb-4"></div>
-              <div className="h-3 w-3/4 mx-auto bg-futuristic-neon/30 rounded-full mb-2"></div>
-              <div className="h-3 w-1/2 mx-auto bg-futuristic-blue/30 rounded-full"></div>
-            </div>
-          ) : (
-            <>
-              <div className="relative h-16 w-16 mx-auto">
-                <div className="absolute inset-0 rounded-full border-2 border-futuristic-blue/20"></div>
-                <div className="absolute inset-0 rounded-full border-t-2 border-r-2 border-b-2 border-l-2 border-t-futuristic-purple border-r-futuristic-blue border-b-futuristic-neon border-l-transparent animate-spin"></div>
-              </div>
-              
-              <p className="text-white/80 font-mono text-sm">
-                Optimizing visualization...
-              </p>
-            </>
-          )}
+      {!splineLoaded && (
+        <div className="relative p-8 text-center max-w-md">
+          <div className="absolute inset-0 bg-black/30 rounded-xl backdrop-blur-sm -z-10"></div>
           
-          {/* Decorative elements */}
-          <div className="absolute top-0 right-0 w-20 h-20 bg-futuristic-blue/10 rounded-full blur-xl"></div>
-          <div className="absolute bottom-0 left-0 w-16 h-16 bg-futuristic-purple/10 rounded-full blur-xl"></div>
+          <div className="space-y-4">
+            {showOptimizedFallback ? (
+              // Simplified, more performance-friendly fallback
+              <div className="mx-auto w-full max-w-md">
+                <div className="h-40 w-full bg-gradient-to-br from-futuristic-blue/20 to-futuristic-purple/20 rounded-xl mb-4"></div>
+                <div className="h-3 w-3/4 mx-auto bg-futuristic-neon/30 rounded-full mb-2"></div>
+                <div className="h-3 w-1/2 mx-auto bg-futuristic-blue/30 rounded-full"></div>
+              </div>
+            ) : (
+              <>
+                <div className="relative h-16 w-16 mx-auto">
+                  <div className="absolute inset-0 rounded-full border-2 border-futuristic-blue/20"></div>
+                  <div className="absolute inset-0 rounded-full border-t-2 border-r-2 border-b-2 border-l-2 border-t-futuristic-purple border-r-futuristic-blue border-b-futuristic-neon border-l-transparent animate-spin"></div>
+                </div>
+                
+                <p className="text-white/80 font-mono text-sm">
+                  Loading visualization...
+                </p>
+              </>
+            )}
+            
+            {/* Decorative elements */}
+            <div className="absolute top-0 right-0 w-20 h-20 bg-futuristic-blue/10 rounded-full blur-xl"></div>
+            <div className="absolute bottom-0 left-0 w-16 h-16 bg-futuristic-purple/10 rounded-full blur-xl"></div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 
