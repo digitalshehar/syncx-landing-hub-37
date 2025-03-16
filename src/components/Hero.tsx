@@ -59,11 +59,9 @@ const Hero = () => {
 
   // Optimized fallback for the 3D component - simplified version
   const heroFallback = (
-    <div className="w-full h-full flex items-center justify-center backdrop-blur-lg bg-black/30 rounded-xl border border-white/10">
+    <div className="w-full h-full flex items-center justify-center">
       {!splineLoaded && (
-        <div className="relative p-8 text-center max-w-md">
-          <div className="absolute inset-0 bg-black/30 rounded-xl backdrop-blur-sm -z-10"></div>
-          
+        <div className="relative p-8 text-center max-w-md">          
           <div className="space-y-4">
             {showOptimizedFallback ? (
               // Simplified, more performance-friendly fallback
@@ -176,7 +174,7 @@ const Hero = () => {
               delay: 0.6 
             }}
           >
-            <div className="absolute inset-0 rounded-2xl overflow-hidden border border-white/5">
+            <div className="absolute inset-0 overflow-hidden rounded-2xl">
               <SplineScene 
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
                 className="w-full h-full"

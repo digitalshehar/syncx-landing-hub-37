@@ -76,7 +76,7 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
   const shouldShowFallback = !isLoaded || hasError || loadTimeout;
 
   const defaultFallback = (
-    <div className="w-full h-full flex items-center justify-center backdrop-blur-lg bg-black/30 rounded-lg p-6">
+    <div className="w-full h-full flex items-center justify-center">
       <div className="space-y-6 text-center">
         <div className="relative h-24 w-24 mx-auto">
           <div className="absolute inset-0 rounded-full border-4 border-futuristic-blue/20 animate-ping-slow"></div>
@@ -102,7 +102,7 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
 
   return (
     <ErrorBoundary fallback={actualFallback}>
-      <div className="relative w-full h-full rounded-xl overflow-hidden">
+      <div className="relative w-full h-full overflow-hidden">
         <Suspense fallback={actualFallback}>
           {!hasError && (
             <Spline
