@@ -43,7 +43,7 @@ export function TestimonialsSection({
   return (
     <section className={cn(
       "bg-background text-foreground relative overflow-hidden",
-      "py-12 sm:py-24 md:py-32 px-0",
+      "py-12 sm:py-24 md:py-32 px-0 w-full",
       className
     )}>
       {/* Neural network background pattern */}
@@ -55,7 +55,7 @@ export function TestimonialsSection({
       <div className="absolute top-2/3 right-1/3 w-2 h-2 rounded-full bg-futuristic-neon/70 blur-sm animate-pulse-glow z-0" style={{ animationDelay: '2s' }}></div>
       
       <motion.div 
-        className="mx-auto flex max-w-container flex-col items-center gap-4 text-center sm:gap-16 relative z-10"
+        className="mx-auto flex w-full max-w-[1400px] flex-col items-center gap-4 text-center sm:gap-16 relative z-10 px-4"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
