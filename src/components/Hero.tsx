@@ -69,20 +69,17 @@ const Hero = () => {
           <div className="text-center lg:text-left space-y-8">
             <h1 
               ref={headlineRef}
-              className="text-6xl md:text-8xl font-bold tracking-tight text-white font-mono opacity-100 leading-tight"
+              className="text-5xl md:text-7xl font-bold tracking-tight text-white font-mono opacity-100"
             >
-              <span className="block mb-2">Spin up your</span> 
-              <span className="bg-gradient-to-r from-futuristic-purple to-futuristic-blue bg-clip-text text-transparent">open-source</span> 
-              <span className="block mt-2">stack in{' '}
+              Spin up your <span className="bg-gradient-to-r from-futuristic-purple to-futuristic-blue bg-clip-text text-transparent">open-source</span> stack in{' '}
               <span className="relative inline-block">
                 minutes
                 <span className="absolute -top-1 -right-1 h-2 w-2 bg-futuristic-neon rounded-full animate-pulse-glow"></span>
               </span>
-              </span>
             </h1>
             <p 
               ref={subheadlineRef}
-              className="max-w-2xl mx-auto lg:mx-0 text-xl md:text-2xl text-gray-300 text-balance opacity-100"
+              className="max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl text-gray-300 text-balance opacity-100"
             >
               Configure and deploy multiple tools with a unified dashboard and seamless integration.
             </p>
@@ -114,7 +111,7 @@ const Hero = () => {
           </div>
           
           <div className={cn(
-            "relative h-[600px] w-full transition-all duration-1000",
+            "relative h-[500px] w-full transition-all duration-1000",
             isLoaded ? "opacity-100" : "opacity-0"
           )}>
             <div className="absolute inset-0 rounded-2xl overflow-hidden">
