@@ -71,13 +71,14 @@ const Hero = () => {
               ref={headlineRef}
               className={cn(
                 "text-5xl md:text-7xl font-bold tracking-tight",
-                "bg-gradient-to-br from-white/90 via-gray-300/90 to-gray-400/80 bg-clip-text text-transparent",
+                "bg-gradient-to-br from-gray-200/95 via-gray-300/90 to-gray-400/80 bg-clip-text text-transparent",
                 "opacity-0 font-mono",
-                "animate-morph"
+                "animate-morph",
+                "drop-shadow-[0_5px_15px_rgba(255,255,255,0.15)]"
               )}
               style={{animationDelay: '100ms'}}
             >
-              Pin up your <span className="bg-gradient-to-r from-futuristic-purple to-futuristic-blue bg-clip-text text-transparent">open-source</span> stack in{' '}
+              Spin up your <span className="bg-gradient-to-r from-futuristic-purple to-futuristic-blue bg-clip-text text-transparent">open-source</span> stack in{' '}
               <span className="relative inline-block">
                 minutes
                 <span className="absolute -top-1 -right-1 h-2 w-2 bg-futuristic-neon rounded-full animate-pulse-glow"></span>
