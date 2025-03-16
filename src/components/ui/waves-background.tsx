@@ -1,8 +1,8 @@
+
 'use client'
 
 import { useRef, useEffect } from "react"
 import { cn } from "@/lib/utils"
-import { useMobile } from "@/hooks/use-mobile"
 
 interface WavesProps {
   /**
@@ -155,7 +155,6 @@ export function Waves({
     a: 0,
     set: false,
   })
-  const isMobile = useMobile()
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -292,19 +291,14 @@ export function Waves({
       setSize()
       setLines()
     }
-    
     function onMouseMove(e) {
-      if (isMobile) return; // Disable mouse tracking on mobile for better scrolling
       updateMouse(e.pageX, e.pageY)
     }
-    
     function onTouchMove(e) {
-      if (isMobile) return; // Skip handling touch events on mobile
       e.preventDefault()
       const touch = e.touches[0]
       updateMouse(touch.clientX, touch.clientY)
     }
-    
     function updateMouse(x, y) {
       const mouse = mouseRef.current
       const b = boundingRef.current
@@ -323,19 +317,13 @@ export function Waves({
     setLines()
     requestAnimationFrame(tick)
     window.addEventListener("resize", onResize)
-    
-    // Only attach mouse and touch event listeners on non-mobile devices
-    if (!isMobile) {
-      window.addEventListener("mousemove", onMouseMove)
-      window.addEventListener("touchmove", onTouchMove, { passive: false })
-    }
+    window.addEventListener("mousemove", onMouseMove)
+    window.addEventListener("touchmove", onTouchMove, { passive: false })
 
     return () => {
       window.removeEventListener("resize", onResize)
-      if (!isMobile) {
-        window.removeEventListener("mousemove", onMouseMove)
-        window.removeEventListener("touchmove", onTouchMove)
-      }
+      window.removeEventListener("mousemove", onMouseMove)
+      window.removeEventListener("touchmove", onTouchMove)
     }
   }, [
     lineColor,
@@ -349,7 +337,6 @@ export function Waves({
     maxCursorMove,
     xGap,
     yGap,
-    isMobile,
   ])
 
   return (
@@ -360,7 +347,6 @@ export function Waves({
       }}
       className={cn(
         "absolute top-0 left-0 w-full h-full overflow-hidden",
-        isMobile ? "touch-none" : "",
         className,
       )}
     >
@@ -368,7 +354,6 @@ export function Waves({
         className={cn(
           "absolute top-0 left-0 rounded-full",
           "w-2 h-2 bg-foreground/10",
-          isMobile ? "hidden" : "",
         )}
         style={{
           transform:
@@ -376,7 +361,7 @@ export function Waves({
           willChange: "transform",
         }}
       />
-      <canvas ref={canvasRef} className={cn("block w-full h-full", isMobile ? "touch-none" : "")} />
+      <canvas ref={canvasRef} className="block w-full h-full" />
     </div>
   )
 }
