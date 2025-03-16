@@ -1,11 +1,10 @@
-
 'use client'
 
 import { Suspense, lazy, useState, useEffect, forwardRef } from 'react'
 import { ErrorBoundary } from './error-boundary'
 import { Skeleton } from './skeleton'
 import { Loader2 } from 'lucide-react'
-import { useMobile } from '@/hooks/use-mobile'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 // Use dynamic import with a smaller initial chunk
 const Spline = lazy(() => import('@splinetool/react-spline'))
@@ -22,7 +21,7 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
   const [isLoaded, setIsLoaded] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
   const [loadTimeout, setLoadTimeout] = useState(false);
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
   const maxRetries = 1; // Reduced retries for faster fallback
 
   useEffect(() => {
