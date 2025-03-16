@@ -7,11 +7,16 @@ import UseCases from '@/components/UseCases';
 import WaitlistForm from '@/components/WaitlistForm';
 import Footer from '@/components/Footer';
 import { ErrorBoundary } from '@/components/ui/error-boundary';
+import { Waves } from '@/components/ui/waves-background';
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Force dark mode
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+    
     // Simulated loading time to ensure all components are ready
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -35,7 +40,24 @@ const Index = () => {
         </button>
       </div>
     }>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-black">
+        {/* Global unified background */}
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <Waves 
+            lineColor="rgba(255, 255, 255, 0.15)"
+            backgroundColor="transparent"
+            waveSpeedX={0.015}
+            waveSpeedY={0.008}
+            waveAmpX={30}
+            waveAmpY={15}
+            friction={0.92}
+            tension={0.008}
+            maxCursorMove={80}
+            xGap={14}
+            yGap={40}
+          />
+        </div>
+
         {isLoading ? (
           <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
             <div className="flex flex-col items-center">
@@ -49,7 +71,7 @@ const Index = () => {
         ) : (
           <>
             <Navbar />
-            <main className="flex-grow">
+            <main className="flex-grow relative z-10">
               <Hero />
               <Features />
               <UseCases />

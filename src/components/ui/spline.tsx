@@ -37,9 +37,6 @@ export function SplineScene({ scene, className, fallback }: SplineSceneProps) {
             />
           </svg>
         </div>
-        <p className="text-sm text-slate-400">
-          Interactive 3D Experience
-        </p>
       </div>
     </div>
   );
