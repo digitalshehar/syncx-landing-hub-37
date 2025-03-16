@@ -59,9 +59,9 @@ const Hero = () => {
 
   // Optimized fallback for the 3D component - simplified version
   const heroFallback = (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="w-full h-full flex items-center justify-center pointer-events-none">
       {!splineLoaded && (
-        <div className="relative p-8 text-center max-w-md">          
+        <div className="relative p-8 text-center max-w-md pointer-events-none">          
           <div className="space-y-4">
             {showOptimizedFallback ? (
               // Simplified, more performance-friendly fallback
@@ -94,11 +94,11 @@ const Hero = () => {
 
   return (
     <section className="relative pt-20 pb-20 md:pt-32 md:pb-32 overflow-hidden min-h-[90vh] flex items-center">
-      {/* Enhanced spotlights */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      {/* Enhanced spotlights with pointer-events-none */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vh] bg-futuristic-purple/5 blur-[120px] rounded-full animate-pulse-glow"></div>
         <div className="absolute top-1/3 left-1/3 w-[50vw] h-[50vh] bg-futuristic-blue/5 blur-[100px] rounded-full animate-pulse-glow" style={{ animationDelay: '1s' }}></div>
-        <Spotlight className="spotlight z-10" fill="white" />
+        <Spotlight className="spotlight z-5" fill="white" />
       </div>
       
       <div 

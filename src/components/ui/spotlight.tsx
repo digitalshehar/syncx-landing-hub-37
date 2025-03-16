@@ -55,11 +55,11 @@ export function Spotlight({
   return (
     <div
       ref={divRef}
-      className={cn("absolute inset-0 overflow-hidden", className)}
+      className={cn("absolute inset-0 overflow-hidden pointer-events-none", className)}
       {...props}
     >
       <div
-        className="absolute inset-0 transition-opacity duration-500"
+        className="absolute inset-0 transition-opacity duration-500 pointer-events-none"
         style={{
           opacity,
           background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${fill}15, transparent 40%)`,

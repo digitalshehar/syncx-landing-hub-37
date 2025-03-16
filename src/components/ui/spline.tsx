@@ -1,7 +1,7 @@
 
 'use client'
 
-import { Suspense, lazy, useState, useEffect } from 'react'
+import { Suspense, lazy, useState, useEffect, forwardRef } from 'react'
 import { ErrorBoundary } from './error-boundary'
 import { Skeleton } from './skeleton'
 import { Loader2 } from 'lucide-react'
@@ -114,7 +114,7 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
           )}
         </Suspense>
         {shouldShowFallback && (
-          <div className="absolute inset-0 z-20 flex items-center justify-center">
+          <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
             {actualFallback}
           </div>
         )}
