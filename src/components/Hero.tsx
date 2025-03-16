@@ -69,13 +69,7 @@ const Hero = () => {
           <div className="text-center lg:text-left space-y-8">
             <h1 
               ref={headlineRef}
-              className={cn(
-                "text-5xl md:text-7xl font-bold tracking-tight",
-                "text-white drop-shadow-lg",
-                "opacity-0 font-mono",
-                "animate-morph"
-              )}
-              style={{animationDelay: '100ms'}}
+              className="text-5xl md:text-7xl font-bold tracking-tight text-white font-mono opacity-100"
             >
               Spin up your <span className="bg-gradient-to-r from-futuristic-purple to-futuristic-blue bg-clip-text text-transparent">open-source</span> stack in{' '}
               <span className="relative inline-block">
@@ -85,18 +79,13 @@ const Hero = () => {
             </h1>
             <p 
               ref={subheadlineRef}
-              className={cn(
-                "max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl text-gray-300 text-balance",
-                "opacity-0"
-              )}
-              style={{animationDelay: '300ms'}}
+              className="max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl text-gray-300 text-balance opacity-100"
             >
               Configure and deploy multiple tools with a unified dashboard and seamless integration.
             </p>
             <div 
               ref={ctaRef}
-              className={cn("pt-8", "opacity-0")}
-              style={{animationDelay: '500ms'}}
+              className="pt-8 opacity-100"
             >
               <a href="#waitlist" className="relative group inline-block">
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-futuristic-purple to-futuristic-blue rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse-glow"></div>
