@@ -176,7 +176,7 @@ const Hero = () => {
               delay: 0.6 
             }}
           >
-            <div className={`absolute inset-0 overflow-hidden rounded-2xl ${isMobile ? 'touch-none' : ''}`}>
+            <div className="absolute inset-0 overflow-hidden rounded-2xl">
               <SplineScene 
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
                 className="w-full h-full"

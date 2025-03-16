@@ -104,12 +104,12 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
 
   return (
     <ErrorBoundary fallback={actualFallback}>
-      <div className={`relative w-full h-full overflow-hidden ${isMobile ? 'touch-none' : ''}`}>
+      <div className="relative w-full h-full overflow-hidden">
         <Suspense fallback={actualFallback}>
           {!hasError && (
             <>
               {isMobile ? (
-                <div className="pointer-events-none">
+                <div className="w-full h-full" style={{ pointerEvents: 'none' }}>
                   <Spline
                     scene={scene}
                     className={className}
