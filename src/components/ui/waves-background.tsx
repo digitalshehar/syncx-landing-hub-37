@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from "react"
 import { cn } from "@/lib/utils"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { useMobile } from "@/hooks/use-mobile"
 
 interface WavesProps {
   /**
@@ -155,7 +155,7 @@ export function Waves({
     a: 0,
     set: false,
   })
-  const isMobile = useIsMobile()
+  const isMobile = useMobile()
 
   useEffect(() => {
     const canvas = canvasRef.current

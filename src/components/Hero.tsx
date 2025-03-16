@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Zap } from 'lucide-react';
@@ -5,13 +6,13 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { SplineScene } from '@/components/ui/spline';
 import { Spotlight } from '@/components/ui/spotlight';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useMobile } from '@/hooks/use-mobile';
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [splineLoaded, setSplineLoaded] = useState(false);
   const [showOptimizedFallback, setShowOptimizedFallback] = useState(false);
-  const isMobile = useIsMobile();
+  const isMobile = useMobile();
 
   const handleSplineLoaded = () => {
     console.log("Spline scene loaded successfully in Hero");
