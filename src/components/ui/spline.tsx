@@ -27,7 +27,7 @@ export function SplineScene({ scene, className, fallback }: SplineSceneProps) {
   };
 
   const defaultFallback = (
-    <div className="w-full h-full flex items-center justify-center bg-gradient-to-r from-slate-800/50 to-black/50 rounded-lg p-4">
+    <div className="w-full h-full flex items-center justify-center backdrop-blur-lg bg-black/10 rounded-lg p-4">
       <div className="space-y-2 text-center">
         <div className="h-24 w-24 mx-auto">
           <svg viewBox="0 0 24 24" className="h-full w-full text-slate-400 animate-pulse">

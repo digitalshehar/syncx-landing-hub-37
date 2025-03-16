@@ -11,7 +11,6 @@ const Hero = () => {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subheadlineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -40,26 +39,9 @@ const Hero = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      setMousePosition({ x, y });
-      
-      // Update CSS variables for spotlight effect
-      document.documentElement.style.setProperty('--x', `${e.clientX}px`);
-      document.documentElement.style.setProperty('--y', `${e.clientY}px`);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   // Custom fallback for the 3D component
   const heroFallback = (
-    <div className="w-full h-full flex items-center justify-center bg-gradient-to-r from-futuristic-blue/10 to-futuristic-purple/10 rounded-xl backdrop-blur-sm">
+    <div className="w-full h-full flex items-center justify-center backdrop-blur-lg bg-white/5 rounded-xl">
       <div className="relative p-8 text-center">
         <div className="absolute inset-0 bg-black/30 rounded-xl backdrop-blur-sm -z-10"></div>
         
@@ -79,11 +61,6 @@ const Hero = () => {
             ></div>
           ))}
         </div>
-        
-        <h3 className="text-xl font-mono text-white/80 mb-2">Open Source Stack</h3>
-        <p className="text-sm text-white/60 max-w-xs mx-auto">
-          Deploy your infrastructure with enterprise-grade security and performance
-        </p>
       </div>
     </div>
   );
@@ -122,7 +99,7 @@ const Hero = () => {
             <p 
               ref={subheadlineRef}
               className={cn(
-                "max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl text-white/90 text-balance",
+                "max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl text-white text-balance",
                 "opacity-0"
               )}
               style={{animationDelay: '300ms'}}
@@ -141,7 +118,7 @@ const Hero = () => {
                   size="lg" 
                   className={cn(
                     "relative",
-                    "bg-black text-white dark:border dark:border-futuristic-neon/30 dark:hover:border-futuristic-neon",
+                    "backdrop-blur-xl bg-black/50 text-white border border-white/10 hover:border-futuristic-neon/50",
                     "px-8 py-6 text-lg",
                     "transition-all duration-500 hover:scale-105"
                   )}
@@ -162,7 +139,7 @@ const Hero = () => {
             "relative h-[500px] w-full transition-all duration-1000",
             isLoaded ? "opacity-100" : "opacity-0"
           )}>
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-futuristic-blue/5 dark:to-futuristic-blue/10 rounded-2xl overflow-hidden">
+            <div className="absolute inset-0 rounded-2xl overflow-hidden">
               <SplineScene 
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
                 className="w-full h-full"
