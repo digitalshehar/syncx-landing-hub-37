@@ -15,7 +15,6 @@ import {
   Globe,
   Sparkles
 } from 'lucide-react';
-import { SplineScene } from '@/components/ui/spline';
 import { Spotlight } from '@/components/ui/spotlight';
 
 type ToolIconProps = {
@@ -79,7 +78,6 @@ const ToolIcon = ({ name, icon, delay }: ToolIconProps) => {
 const Features = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
-  const feature3DRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -96,7 +94,6 @@ const Features = () => {
 
     if (headingRef.current) observer.observe(headingRef.current);
     if (featuresRef.current) observer.observe(featuresRef.current);
-    if (feature3DRef.current) observer.observe(feature3DRef.current);
 
     return () => observer.disconnect();
   }, []);
@@ -249,41 +246,6 @@ const Features = () => {
               delay={index * 100}
             />
           ))}
-        </div>
-        
-        {/* 3D Feature Demo Section */}
-        <div 
-          ref={feature3DRef}
-          className="mt-32 opacity-0"
-          style={{ transition: 'opacity 1s ease-out' }}
-        >
-          <div className="w-full rounded-xl overflow-hidden bg-black/90 relative h-[600px]">
-            <Spotlight
-              className="-top-40 left-0 md:left-60 md:-top-20"
-              fill="white"
-            />
-            
-            <div className="flex flex-col md:flex-row h-full">
-              {/* Left content */}
-              <div className="flex-1 p-8 relative z-10 flex flex-col justify-center">
-                <h3 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
-                  Interactive 3D
-                </h3>
-                <p className="mt-4 text-neutral-300 max-w-lg">
-                  Spin up your open-source stack in minutes. Configure and deploy multiple tools 
-                  with a unified dashboard and seamless integration.
-                </p>
-              </div>
-
-              {/* Right content */}
-              <div className="flex-1 relative">
-                <SplineScene 
-                  scene="https://prod.spline.design/c4Ub1KVNvJVPk9Ec/scene.splinecode"
-                  className="w-full h-full"
-                />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
