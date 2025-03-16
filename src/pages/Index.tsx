@@ -12,6 +12,9 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Force dark mode
+    document.documentElement.classList.add('dark');
+    
     // Simulated loading time to ensure all components are ready
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -35,7 +38,7 @@ const Index = () => {
         </button>
       </div>
     }>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-black text-white">
         {isLoading ? (
           <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
             <div className="flex flex-col items-center">

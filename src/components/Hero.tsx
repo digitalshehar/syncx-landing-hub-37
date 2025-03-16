@@ -1,5 +1,6 @@
+
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Sparkles, Zap } from 'lucide-react';
+import { ArrowRight, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { SplineScene } from '@/components/ui/spline';
@@ -10,7 +11,6 @@ const Hero = () => {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subheadlineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const orbitRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -30,8 +30,7 @@ const Hero = () => {
     if (headlineRef.current) observer.observe(headlineRef.current);
     if (subheadlineRef.current) observer.observe(subheadlineRef.current);
     if (ctaRef.current) observer.observe(ctaRef.current);
-    if (orbitRef.current) observer.observe(orbitRef.current);
-
+    
     // Set loaded after a short delay to ensure smooth animation
     const timer = setTimeout(() => setIsLoaded(true), 500);
     
@@ -67,69 +66,18 @@ const Hero = () => {
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-20 h-20 bg-futuristic-blue/10 rounded-full blur-xl"></div>
         <div className="absolute bottom-0 left-0 w-16 h-16 bg-futuristic-purple/10 rounded-full blur-xl"></div>
-        
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          {[...Array(9)].map((_, i) => (
-            <div 
-              key={i} 
-              className={`h-4 w-4 rounded-full ${
-                i % 3 === 0 ? 'bg-futuristic-blue/30' : 
-                i % 3 === 1 ? 'bg-futuristic-purple/30' : 'bg-futuristic-neon/30'
-              } animate-pulse`}
-              style={{ animationDelay: `${i * 100}ms` }}
-            ></div>
-          ))}
-        </div>
-        
-        <h3 className="text-xl font-mono text-white/80 mb-2">Open Source Stack</h3>
-        <p className="text-sm text-white/60 max-w-xs mx-auto">
-          Deploy your infrastructure with enterprise-grade security and performance
-        </p>
-        
-        {/* Connection lines */}
-        <div className="mt-6 relative h-16">
-          {[...Array(3)].map((_, i) => (
-            <div 
-              key={i}
-              className="absolute left-1/2 w-px h-full bg-gradient-to-b from-futuristic-blue/50 to-transparent"
-              style={{ 
-                transform: `translateX(${(i-1) * 20}px)`,
-                opacity: 0.3 + (i * 0.2)
-              }}
-            ></div>
-          ))}
-        </div>
       </div>
     </div>
   );
 
   return (
-    <section className="relative pt-20 pb-20 md:pt-32 md:pb-32 overflow-hidden min-h-[90vh] flex items-center">
-      {/* Enhanced spotlights for dark mode */}
-      <div className="absolute inset-0 z-0 overflow-hidden dark:block hidden">
+    <section className="relative pt-20 pb-20 md:pt-32 md:pb-32 overflow-hidden min-h-[90vh] flex items-center bg-background dark:bg-black">
+      {/* Enhanced spotlight for dark mode */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vh] bg-futuristic-purple/5 blur-[120px] rounded-full animate-pulse-glow"></div>
         <div className="absolute top-1/3 left-1/3 w-[50vw] h-[50vh] bg-futuristic-blue/5 blur-[100px] rounded-full animate-pulse-glow" style={{ animationDelay: '1s' }}></div>
         <Spotlight className="spotlight z-10" fill="white" />
       </div>
-      
-      {/* 3D orbital decoration */}
-      <div 
-        ref={orbitRef}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] opacity-0 pointer-events-none"
-        style={{ animationDelay: '800ms' }}
-      >
-        <div className="absolute inset-0 border border-futuristic-neon/10 rounded-full animate-rotate-slow"></div>
-        <div className="absolute inset-0 border border-futuristic-purple/10 rounded-full animate-rotate-slow" style={{ animationDelay: '2s', transform: 'rotate(60deg)' }}></div>
-        <div className="absolute inset-0 border border-futuristic-pink/10 rounded-full animate-rotate-slow" style={{ animationDelay: '4s', transform: 'rotate(120deg)' }}></div>
-        
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 h-2 w-2 bg-futuristic-neon rounded-full animate-pulse-glow"></div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-2 w-2 bg-futuristic-purple rounded-full animate-pulse-glow" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-2 w-2 bg-futuristic-pink rounded-full animate-pulse-glow" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 h-2 w-2 bg-futuristic-glow rounded-full animate-pulse-glow" style={{ animationDelay: '3s' }}></div>
-      </div>
-      
-      {/* Light mode gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none dark:hidden" />
       
       <div 
         ref={containerRef} 
@@ -140,8 +88,7 @@ const Hero = () => {
             <h1 
               ref={headlineRef}
               className={cn(
-                "text-5xl md:text-7xl font-bold tracking-tight text-foreground",
-                "dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-br dark:from-white dark:via-futuristic-silver dark:to-slate-300 leading-tight",
+                "text-5xl md:text-7xl font-bold text-foreground dark:text-white",
                 "opacity-0 font-mono",
                 "animate-morph"
               )}
@@ -156,7 +103,7 @@ const Hero = () => {
             <p 
               ref={subheadlineRef}
               className={cn(
-                "max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl text-foreground/80 text-balance",
+                "max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl text-foreground/80 dark:text-white/80 text-balance",
                 "opacity-0"
               )}
               style={{animationDelay: '300ms'}}
@@ -188,7 +135,7 @@ const Hero = () => {
               
               <div className="mt-8 flex justify-center lg:justify-start items-center space-x-2 opacity-70">
                 <Zap size={16} className="text-futuristic-neon animate-pulse-subtle" />
-                <span className="text-sm">No credit card required • Cancel anytime</span>
+                <span className="text-sm dark:text-white/70">No credit card required • Cancel anytime</span>
               </div>
             </div>
           </div>
@@ -199,7 +146,7 @@ const Hero = () => {
           )}>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent to-futuristic-blue/5 dark:to-futuristic-blue/10 rounded-2xl overflow-hidden">
               <SplineScene 
-                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
+                scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode" 
                 className="w-full h-full"
                 fallback={heroFallback}
               />
