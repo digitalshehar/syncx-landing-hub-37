@@ -100,12 +100,23 @@ const Index = () => {
                 />
               </div>
               
-              <div className="relative w-20 h-20 mb-8">
+              <div className="relative w-24 h-24 mb-8">
                 <div className="absolute inset-0 rounded-full border-4 border-futuristic-blue/20 animate-ping"></div>
-                <div className="absolute inset-2 rounded-full border-2 border-t-futuristic-purple border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
+                <div className="absolute inset-2 rounded-full border-t-2 border-r-2 border-b-2 border-l-2 border-t-futuristic-purple border-r-futuristic-blue border-b-futuristic-neon border-l-transparent animate-spin"></div>
+                <div className="absolute inset-4 rounded-full border-2 border-t-futuristic-neon border-r-transparent border-b-transparent border-l-futuristic-blue animate-spin" style={{ animationDuration: '1.5s', animationDirection: 'reverse' }}></div>
               </div>
               <h2 className="text-xl font-mono text-white mb-6">Syncx</h2>
-              <Progress value={loadProgress} className="h-1 w-full bg-white/10 mb-2" />
+              <div className="w-full h-2 rounded-full bg-white/5 mb-2 overflow-hidden relative">
+                <div 
+                  className="h-full rounded-full absolute top-0 left-0 bg-gradient-to-r from-futuristic-neon via-futuristic-blue to-futuristic-purple background-animate"
+                  style={{ 
+                    width: `${loadProgress}%`, 
+                    transition: 'width 0.5s ease-out',
+                    backgroundSize: '200% 100%',
+                    animation: 'gradient-x 3s ease infinite'
+                  }}
+                ></div>
+              </div>
               <p className="text-white/60 font-mono text-sm mt-2 self-end">{Math.round(loadProgress)}%</p>
               <p className="text-white/80 font-mono text-sm mt-4 animate-pulse">Loading Experience...</p>
             </div>

@@ -66,7 +66,7 @@ const ToolIcon = ({ name, icon, delay }: ToolIconProps) => {
         {/* Animated glow effect */}
         <div className="absolute -inset-1 bg-gradient-to-r from-transparent via-futuristic-neon/20 to-transparent opacity-0 group-hover:opacity-100 blur-sm animate-shimmer"></div>
         
-        <div className="relative z-10">
+        <div className="relative z-10 text-white">
           {icon}
         </div>
       </div>

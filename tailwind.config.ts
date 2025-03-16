@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -135,10 +134,10 @@ export default {
 				},
 				'gradient-x': {
 					'0%, 100%': {
-						backgroundPosition: '0% 50%',
+						'background-position': '0% 50%',
 					},
 					'50%': {
-						backgroundPosition: '100% 50%',
+						'background-position': '100% 50%',
 					},
 				},
 				'gradient-y': {
@@ -191,7 +190,7 @@ export default {
 				'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
 				'morph': 'morph 15s linear infinite',
 				'text-gradient': 'text-gradient 8s ease infinite',
-				'gradient-x': 'gradient-x 10s ease infinite',
+				'gradient-x': 'gradient-x 3s ease infinite',
 				'gradient-y': 'gradient-y 10s ease infinite',
 				'gradient-xy': 'gradient-xy 10s ease infinite',
 				'bg-pan': 'bg-pan 30s infinite linear',
