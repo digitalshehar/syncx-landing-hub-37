@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -11,8 +11,6 @@ const Hero = () => {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subheadlineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [splineLoaded, setSplineLoaded] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -31,17 +29,12 @@ const Hero = () => {
     if (subheadlineRef.current) observer.observe(subheadlineRef.current);
     if (ctaRef.current) observer.observe(ctaRef.current);
     
-    // Set loaded after a short delay to ensure smooth animation
-    const timer = setTimeout(() => setIsLoaded(true), 500);
-    
     return () => {
       observer.disconnect();
-      clearTimeout(timer);
     };
   }, []);
 
   const handleSplineLoaded = () => {
-    setSplineLoaded(true);
     console.log("Spline scene loaded successfully");
   };
 
@@ -116,10 +109,7 @@ const Hero = () => {
             </div>
           </div>
           
-          <div className={cn(
-            "relative h-[650px] w-full transition-all duration-1000", // Increased height from 500px to 650px
-            isLoaded ? "opacity-100" : "opacity-0"
-          )}>
+          <div className="relative h-[650px] w-full">
             <div className="absolute inset-0 rounded-2xl overflow-hidden">
               <SplineScene 
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 

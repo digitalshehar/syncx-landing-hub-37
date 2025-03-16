@@ -9,10 +9,12 @@ import Footer from '@/components/Footer';
 import { ErrorBoundary } from '@/components/ui/error-boundary';
 import { Waves } from '@/components/ui/waves-background';
 import { Progress } from '@/components/ui/progress';
+import { SplineScene } from '@/components/ui/spline';
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadProgress, setLoadProgress] = useState(0);
+  const [splineLoaded, setSplineLoaded] = useState(false);
 
   useEffect(() => {
     // Force dark mode
@@ -22,23 +24,37 @@ const Index = () => {
     // Simulate loading progress
     const progressInterval = setInterval(() => {
       setLoadProgress(prev => {
-        const next = Math.min(prev + Math.random() * 10, 95);
+        // Cap at 90% until Spline is loaded
+        const next = Math.min(prev + Math.random() * 10, splineLoaded ? 100 : 90);
         return next;
       });
     }, 400);
     
-    // Give 3D assets time to preload
-    const timer = setTimeout(() => {
+    // If Spline loads, set progress to 100% and finish loading
+    if (splineLoaded && loadProgress >= 90) {
       clearInterval(progressInterval);
       setLoadProgress(100);
       setTimeout(() => setIsLoading(false), 400); // Slight delay after 100% for visual smoothness
-    }, 3500);
+    }
+    
+    // If Spline doesn't load within 5 seconds, continue anyway
+    const fallbackTimer = setTimeout(() => {
+      if (!splineLoaded) {
+        console.log("Spline load timeout - continuing anyway");
+        setSplineLoaded(true);
+      }
+    }, 5000);
     
     return () => {
-      clearTimeout(timer);
       clearInterval(progressInterval);
+      clearTimeout(fallbackTimer);
     };
-  }, []);
+  }, [splineLoaded, loadProgress]);
+
+  const handleSplineLoaded = () => {
+    console.log("Preloaded Spline scene loaded successfully");
+    setSplineLoaded(true);
+  };
 
   return (
     <ErrorBoundary fallback={
@@ -76,6 +92,14 @@ const Index = () => {
         {isLoading ? (
           <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
             <div className="flex flex-col items-center max-w-md w-full px-6">
+              {/* Hidden preloader for Spline */}
+              <div className="absolute opacity-0 h-0 w-0 overflow-hidden">
+                <SplineScene
+                  scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                  onSceneLoaded={handleSplineLoaded}
+                />
+              </div>
+              
               <div className="relative w-20 h-20 mb-8">
                 <div className="absolute inset-0 rounded-full border-4 border-futuristic-blue/20 animate-ping"></div>
                 <div className="absolute inset-2 rounded-full border-2 border-t-futuristic-purple border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
