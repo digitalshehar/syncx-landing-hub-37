@@ -95,8 +95,8 @@ const Index = () => {
         {isLoading ? (
           <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
             <div className="flex flex-col items-center max-w-md w-full px-6">
-              {/* Hidden preloader for Spline - load in background but don't render visibly */}
-              <div className="absolute h-0 w-0 overflow-hidden opacity-0">
+              {/* Hidden preloader for Spline - positioned to be invisible but still fully load */}
+              <div style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', width: 0, height: 0, overflow: 'hidden' }}>
                 <SplineScene
                   scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
                   onSceneLoaded={handleSplineLoaded}

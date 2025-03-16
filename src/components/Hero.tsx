@@ -59,9 +59,9 @@ const Hero = () => {
 
   // Optimized fallback for the 3D component - simplified version
   const heroFallback = (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="w-full h-full flex items-center justify-center" style={{ pointerEvents: 'none' }}>
       {!splineLoaded && (
-        <div className="relative p-8 text-center max-w-md">          
+        <div className="relative p-8 text-center max-w-md" style={{ pointerEvents: 'none' }}>          
           <div className="space-y-4">
             {showOptimizedFallback ? (
               // Simplified, more performance-friendly fallback
