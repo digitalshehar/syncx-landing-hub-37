@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Features from '@/components/Features';
@@ -16,6 +16,7 @@ const Index = () => {
   const [loadProgress, setLoadProgress] = useState(0);
   const [splineLoaded, setSplineLoaded] = useState(false);
   const [loadingTimeout, setLoadingTimeout] = useState(false);
+  const splineRef = useRef(null);
 
   useEffect(() => {
     // Force dark mode
@@ -95,11 +96,12 @@ const Index = () => {
         {isLoading ? (
           <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
             <div className="flex flex-col items-center max-w-md w-full px-6">
-              {/* Hidden preloader for Spline - positioned to be invisible but still fully load */}
-              <div style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', width: 0, height: 0, overflow: 'hidden' }}>
+              {/* Visible Spline preloader - load it immediately in the loading screen */}
+              <div className="w-full h-64 mb-8 relative overflow-hidden">
                 <SplineScene
                   scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
                   onSceneLoaded={handleSplineLoaded}
+                  ref={splineRef}
                 />
               </div>
               
