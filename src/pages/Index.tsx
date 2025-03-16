@@ -8,21 +8,36 @@ import WaitlistForm from '@/components/WaitlistForm';
 import Footer from '@/components/Footer';
 import { ErrorBoundary } from '@/components/ui/error-boundary';
 import { Waves } from '@/components/ui/waves-background';
+import { Progress } from '@/components/ui/progress';
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [loadProgress, setLoadProgress] = useState(0);
 
   useEffect(() => {
     // Force dark mode
     document.documentElement.classList.add('dark');
     localStorage.setItem('theme', 'dark');
     
-    // Simulated loading time to ensure all components are ready
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
+    // Simulate loading progress
+    const progressInterval = setInterval(() => {
+      setLoadProgress(prev => {
+        const next = Math.min(prev + Math.random() * 10, 95);
+        return next;
+      });
+    }, 400);
     
-    return () => clearTimeout(timer);
+    // Give 3D assets time to preload
+    const timer = setTimeout(() => {
+      clearInterval(progressInterval);
+      setLoadProgress(100);
+      setTimeout(() => setIsLoading(false), 400); // Slight delay after 100% for visual smoothness
+    }, 3500);
+    
+    return () => {
+      clearTimeout(timer);
+      clearInterval(progressInterval);
+    };
   }, []);
 
   return (
@@ -60,11 +75,14 @@ const Index = () => {
 
         {isLoading ? (
           <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
-            <div className="flex flex-col items-center">
-              <div className="relative w-16 h-16">
+            <div className="flex flex-col items-center max-w-md w-full px-6">
+              <div className="relative w-20 h-20 mb-8">
                 <div className="absolute inset-0 rounded-full border-4 border-futuristic-blue/20 animate-ping"></div>
                 <div className="absolute inset-2 rounded-full border-2 border-t-futuristic-purple border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
               </div>
+              <h2 className="text-xl font-mono text-white mb-6">Syncx</h2>
+              <Progress value={loadProgress} className="h-1 w-full bg-white/10 mb-2" />
+              <p className="text-white/60 font-mono text-sm mt-2 self-end">{Math.round(loadProgress)}%</p>
               <p className="text-white/80 font-mono text-sm mt-4 animate-pulse">Loading Experience...</p>
             </div>
           </div>

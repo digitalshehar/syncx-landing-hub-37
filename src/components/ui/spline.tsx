@@ -4,6 +4,7 @@
 import { Suspense, lazy, useState } from 'react'
 import { ErrorBoundary } from './error-boundary'
 import { Skeleton } from './skeleton'
+import { Progress } from './progress'
 
 const Spline = lazy(() => import('@splinetool/react-spline'))
 
@@ -11,19 +12,39 @@ interface SplineSceneProps {
   scene: string
   className?: string
   fallback?: React.ReactNode
+  onSceneLoaded?: () => void
 }
 
-export function SplineScene({ scene, className, fallback }: SplineSceneProps) {
+export function SplineScene({ scene, className, fallback, onSceneLoaded }: SplineSceneProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [loadProgress, setLoadProgress] = useState(0);
+
+  // Simulate progress during loading
+  useState(() => {
+    let interval: NodeJS.Timeout;
+    if (isLoading) {
+      interval = setInterval(() => {
+        setLoadProgress(prev => {
+          const next = prev + Math.random() * 15;
+          return next > 90 ? 90 : next; // Cap at 90% until actually loaded
+        });
+      }, 500);
+    }
+    
+    return () => clearInterval(interval);
+  });
 
   const handleSplineLoad = () => {
     setIsLoading(false);
+    setLoadProgress(100);
+    if (onSceneLoaded) onSceneLoaded();
   };
 
   const handleSplineError = () => {
     setHasError(true);
     setIsLoading(false);
+    setLoadProgress(100);
   };
 
   const defaultFallback = (
@@ -37,12 +58,16 @@ export function SplineScene({ scene, className, fallback }: SplineSceneProps) {
   );
 
   const loadingFallback = (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="flex flex-col items-center space-y-4">
+    <div className="w-full h-full flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center space-y-6 w-full max-w-md">
         <Skeleton className="h-32 w-32 rounded-full" />
-        <div className="space-y-2">
+        <div className="space-y-4 w-full">
           <Skeleton className="h-4 w-[250px]" />
           <Skeleton className="h-4 w-[200px]" />
+          <div className="w-full space-y-2">
+            <Progress value={loadProgress} className="h-1 w-full bg-white/10" />
+            <p className="text-xs text-white/50 text-right">{Math.round(loadProgress)}%</p>
+          </div>
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@ const Hero = () => {
   const subheadlineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [splineLoaded, setSplineLoaded] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -38,6 +39,11 @@ const Hero = () => {
       clearTimeout(timer);
     };
   }, []);
+
+  const handleSplineLoaded = () => {
+    setSplineLoaded(true);
+    console.log("Spline scene loaded successfully");
+  };
 
   // Custom fallback for the 3D component
   const heroFallback = (
@@ -111,7 +117,7 @@ const Hero = () => {
           </div>
           
           <div className={cn(
-            "relative h-[500px] w-full transition-all duration-1000",
+            "relative h-[650px] w-full transition-all duration-1000", // Increased height from 500px to 650px
             isLoaded ? "opacity-100" : "opacity-0"
           )}>
             <div className="absolute inset-0 rounded-2xl overflow-hidden">
@@ -119,6 +125,7 @@ const Hero = () => {
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
                 className="w-full h-full"
                 fallback={heroFallback}
+                onSceneLoaded={handleSplineLoaded}
               />
             </div>
           </div>
