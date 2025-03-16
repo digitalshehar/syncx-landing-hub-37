@@ -5,6 +5,7 @@ import { Suspense, lazy, useState, useEffect, forwardRef } from 'react'
 import { ErrorBoundary } from './error-boundary'
 import { Skeleton } from './skeleton'
 import { Loader2 } from 'lucide-react'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 // Use dynamic import with a smaller initial chunk
 const Spline = lazy(() => import('@splinetool/react-spline'))
@@ -22,6 +23,7 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
   const [retryCount, setRetryCount] = useState(0);
   const [loadTimeout, setLoadTimeout] = useState(false);
   const maxRetries = 1; // Reduced retries for faster fallback
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     // Reset states when scene URL changes
@@ -102,15 +104,17 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
 
   return (
     <ErrorBoundary fallback={actualFallback}>
-      <div className="relative w-full h-full overflow-hidden">
+      <div className={`relative w-full h-full overflow-hidden ${isMobile ? 'touch-none' : ''}`}>
         <Suspense fallback={actualFallback}>
           {!hasError && (
-            <Spline
-              scene={scene}
-              className={className}
-              onLoad={handleSplineLoad}
-              onError={handleSplineError}
-            />
+            <div className={isMobile ? 'pointer-events-none' : ''}>
+              <Spline
+                scene={scene}
+                className={className}
+                onLoad={handleSplineLoad}
+                onError={handleSplineError}
+              />
+            </div>
           )}
         </Suspense>
         {shouldShowFallback && (

@@ -6,11 +6,13 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { SplineScene } from '@/components/ui/spline';
 import { Spotlight } from '@/components/ui/spotlight';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [splineLoaded, setSplineLoaded] = useState(false);
   const [showOptimizedFallback, setShowOptimizedFallback] = useState(false);
+  const isMobile = useIsMobile();
 
   const handleSplineLoaded = () => {
     console.log("Spline scene loaded successfully in Hero");
@@ -164,7 +166,7 @@ const Hero = () => {
           </motion.div>
           
           <motion.div 
-            className="relative h-[650px] w-full"
+            className={`relative h-[650px] w-full ${isMobile ? 'touch-none' : ''}`}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ 
@@ -174,7 +176,7 @@ const Hero = () => {
               delay: 0.6 
             }}
           >
-            <div className="absolute inset-0 overflow-hidden rounded-2xl">
+            <div className={`absolute inset-0 overflow-hidden rounded-2xl ${isMobile ? 'touch-none' : ''}`}>
               <SplineScene 
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
                 className="w-full h-full"

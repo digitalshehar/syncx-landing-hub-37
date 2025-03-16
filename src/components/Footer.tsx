@@ -118,7 +118,7 @@ const Footer = () => {
           <div className="flex items-center text-sm text-white/60">
             <div className="flex items-center mr-4">
               <Users className="h-4 w-4 mr-1.5 text-futuristic-neon" />
-              <span className="text-white/80">{visitorCount.toLocaleString()} visitors</span>
+              <span className="text-white/80">{visitorCount.toLocaleString()}</span>
             </div>
             <p>© {new Date().getFullYear()} Syncx.app. All rights reserved.</p>
           </div>
