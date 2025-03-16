@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { ArrowRight, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -8,34 +9,34 @@ import { Spotlight } from '@/components/ui/spotlight';
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const headlineRef = useRef<HTMLHeadingElement>(null);
-  const subheadlineRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (headlineRef.current) observer.observe(headlineRef.current);
-    if (subheadlineRef.current) observer.observe(subheadlineRef.current);
-    if (ctaRef.current) observer.observe(ctaRef.current);
-    
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
 
   const handleSplineLoaded = () => {
     console.log("Spline scene loaded successfully");
+  };
+
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        type: "spring", 
+        stiffness: 300, 
+        damping: 24 
+      }
+    }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
   };
 
   // Custom fallback for the 3D component
@@ -65,28 +66,38 @@ const Hero = () => {
         className="container max-w-6xl mx-auto px-4 relative z-10"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          <div className="text-center lg:text-left space-y-8">
-            <h1 
-              ref={headlineRef}
-              className="text-5xl md:text-7xl font-bold tracking-tight text-white font-mono opacity-100"
+          <motion.div 
+            className="text-center lg:text-left space-y-8"
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+          >
+            <motion.h1 
+              variants={fadeInUp}
+              className="text-5xl md:text-7xl font-bold tracking-tight text-white font-mono"
             >
               Spin up your <span className="bg-gradient-to-r from-futuristic-purple to-futuristic-blue bg-clip-text text-transparent">open-source</span> stack in{' '}
               <span className="relative inline-block">
                 minutes
                 <span className="absolute -top-1 -right-1 h-2 w-2 bg-futuristic-neon rounded-full animate-pulse-glow"></span>
               </span>
-            </h1>
-            <p 
-              ref={subheadlineRef}
-              className="max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl text-gray-300 text-balance opacity-100"
+            </motion.h1>
+            <motion.p 
+              variants={fadeInUp}
+              className="max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl text-gray-300 text-balance"
             >
               Configure and deploy multiple tools with a unified dashboard and seamless integration.
-            </p>
-            <div 
-              ref={ctaRef}
-              className="pt-8 opacity-100"
+            </motion.p>
+            <motion.div 
+              variants={fadeInUp}
+              className="pt-8"
             >
-              <a href="#waitlist" className="relative group inline-block">
+              <motion.a 
+                href="#waitlist" 
+                className="relative group inline-block"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+              >
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-futuristic-purple to-futuristic-blue rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse-glow"></div>
                 <Button 
                   size="lg" 
@@ -94,22 +105,35 @@ const Hero = () => {
                     "relative",
                     "backdrop-blur-xl bg-black/50 text-white border border-white/10 hover:border-futuristic-neon/50",
                     "px-8 py-6 text-lg",
-                    "transition-all duration-500 hover:scale-105"
+                    "transition-all duration-500"
                   )}
                 >
                   Join Waitlist for Early Access
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
-              </a>
+              </motion.a>
               
-              <div className="mt-8 flex justify-center lg:justify-start items-center space-x-2 opacity-70">
+              <motion.div 
+                variants={fadeInUp}
+                className="mt-8 flex justify-center lg:justify-start items-center space-x-2 opacity-70"
+              >
                 <Zap size={16} className="text-futuristic-neon animate-pulse-subtle" />
                 <span className="text-sm text-white">No credit card required • Cancel anytime</span>
-              </div>
-            </div>
-          </div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
           
-          <div className="relative h-[650px] w-full">
+          <motion.div 
+            className="relative h-[650px] w-full"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ 
+              type: "spring", 
+              stiffness: 100, 
+              damping: 20,
+              delay: 0.6 
+            }}
+          >
             <div className="absolute inset-0 rounded-2xl overflow-hidden">
               <SplineScene 
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
@@ -118,7 +142,7 @@ const Hero = () => {
                 onSceneLoaded={handleSplineLoaded}
               />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -176,6 +176,10 @@ export default {
 					'25%': { transform: 'translateY(-5px) rotate(1deg)' },
 					'50%': { transform: 'translateY(0) rotate(0deg)' },
 					'75%': { transform: 'translateY(5px) rotate(-1deg)' }
+				},
+				'marquee': {
+					'0%': { transform: 'translateX(0)' },
+					'100%': { transform: 'translateX(calc(-50% - var(--gap)/2))' }
 				}
 			},
 			animation: {
@@ -196,7 +200,8 @@ export default {
 				'bg-pan': 'bg-pan 30s infinite linear',
 				'blur-in': 'blur-in 0.5s forwards',
 				'blur-out': 'blur-out 0.5s forwards',
-				'float-slow': 'float-slow 8s ease-in-out infinite'
+				'float-slow': 'float-slow 8s ease-in-out infinite',
+				'marquee': 'marquee var(--duration) linear infinite',
 			}
 		}
 	},

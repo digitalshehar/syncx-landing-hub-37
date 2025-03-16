@@ -4,11 +4,11 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Features from '@/components/Features';
 import UseCases from '@/components/UseCases';
+import Testimonials from '@/components/Testimonials';
 import WaitlistForm from '@/components/WaitlistForm';
 import Footer from '@/components/Footer';
 import { ErrorBoundary } from '@/components/ui/error-boundary';
 import { Waves } from '@/components/ui/waves-background';
-import { Progress } from '@/components/ui/progress';
 import { SplineScene } from '@/components/ui/spline';
 
 const Index = () => {
@@ -128,6 +128,7 @@ const Index = () => {
               <Hero />
               <Features />
               <UseCases />
+              <Testimonials />
               <WaitlistForm />
             </main>
             <Footer />
