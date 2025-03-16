@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Sparkles, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -58,6 +57,51 @@ const Hero = () => {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  // Custom fallback for the 3D component
+  const heroFallback = (
+    <div className="w-full h-full flex items-center justify-center bg-gradient-to-r from-futuristic-blue/10 to-futuristic-purple/10 rounded-xl backdrop-blur-sm">
+      <div className="relative p-8 text-center">
+        <div className="absolute inset-0 bg-black/30 rounded-xl backdrop-blur-sm -z-10"></div>
+        
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-20 h-20 bg-futuristic-blue/10 rounded-full blur-xl"></div>
+        <div className="absolute bottom-0 left-0 w-16 h-16 bg-futuristic-purple/10 rounded-full blur-xl"></div>
+        
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          {[...Array(9)].map((_, i) => (
+            <div 
+              key={i} 
+              className={`h-4 w-4 rounded-full ${
+                i % 3 === 0 ? 'bg-futuristic-blue/30' : 
+                i % 3 === 1 ? 'bg-futuristic-purple/30' : 'bg-futuristic-neon/30'
+              } animate-pulse`}
+              style={{ animationDelay: `${i * 100}ms` }}
+            ></div>
+          ))}
+        </div>
+        
+        <h3 className="text-xl font-mono text-white/80 mb-2">Open Source Stack</h3>
+        <p className="text-sm text-white/60 max-w-xs mx-auto">
+          Deploy your infrastructure with enterprise-grade security and performance
+        </p>
+        
+        {/* Connection lines */}
+        <div className="mt-6 relative h-16">
+          {[...Array(3)].map((_, i) => (
+            <div 
+              key={i}
+              className="absolute left-1/2 w-px h-full bg-gradient-to-b from-futuristic-blue/50 to-transparent"
+              style={{ 
+                transform: `translateX(${(i-1) * 20}px)`,
+                opacity: 0.3 + (i * 0.2)
+              }}
+            ></div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <section className="relative pt-20 pb-20 md:pt-32 md:pb-32 overflow-hidden min-h-[90vh] flex items-center">
@@ -155,8 +199,9 @@ const Hero = () => {
           )}>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent to-futuristic-blue/5 dark:to-futuristic-blue/10 rounded-2xl overflow-hidden">
               <SplineScene 
-                scene="https://prod.spline.design/c4Ub1KVNvJVPk9Ec/scene.splinecode" 
+                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
                 className="w-full h-full"
+                fallback={heroFallback}
               />
             </div>
           </div>
