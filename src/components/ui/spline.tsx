@@ -114,7 +114,7 @@ export function SplineScene({ scene, className, fallback, onSceneLoaded }: Splin
           )}
         </Suspense>
         {shouldShowFallback && (
-          <div className="absolute inset-0" style={{ pointerEvents: 'none' }}>
+          <div className="absolute inset-0" style={{ pointerEvents: 'none', zIndex: 5 }}>
             {actualFallback}
           </div>
         )}

@@ -56,6 +56,7 @@ export function Spotlight({
     <div
       ref={divRef}
       className={cn("absolute inset-0 pointer-events-none", className)}
+      style={{ zIndex: 1 }}
       {...props}
     >
       <div
