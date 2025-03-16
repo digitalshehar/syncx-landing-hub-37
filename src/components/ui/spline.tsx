@@ -30,12 +30,7 @@ export function SplineScene({ scene, className, fallback }: SplineSceneProps) {
     <div className="w-full h-full flex items-center justify-center backdrop-blur-lg bg-black/10 rounded-lg p-4">
       <div className="space-y-2 text-center">
         <div className="h-24 w-24 mx-auto">
-          <svg viewBox="0 0 24 24" className="h-full w-full text-slate-400 animate-pulse">
-            <path
-              fill="currentColor"
-              d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198c.03-.028.061-.056.091-.086L12 5.432z"
-            />
-          </svg>
+          <div className="w-full h-full rounded-full border-2 border-t-futuristic-neon border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
         </div>
       </div>
     </div>

@@ -48,19 +48,6 @@ const Hero = () => {
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-20 h-20 bg-futuristic-blue/10 rounded-full blur-xl"></div>
         <div className="absolute bottom-0 left-0 w-16 h-16 bg-futuristic-purple/10 rounded-full blur-xl"></div>
-        
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          {[...Array(9)].map((_, i) => (
-            <div 
-              key={i} 
-              className={`h-4 w-4 rounded-full ${
-                i % 3 === 0 ? 'bg-futuristic-blue/30' : 
-                i % 3 === 1 ? 'bg-futuristic-purple/30' : 'bg-futuristic-neon/30'
-              } animate-pulse`}
-              style={{ animationDelay: `${i * 100}ms` }}
-            ></div>
-          ))}
-        </div>
       </div>
     </div>
   );
@@ -84,28 +71,27 @@ const Hero = () => {
               ref={headlineRef}
               className={cn(
                 "text-5xl md:text-7xl font-bold tracking-tight",
-                "text-white leading-tight",
+                "bg-gradient-to-br from-white/90 via-gray-300/90 to-gray-400/80 bg-clip-text text-transparent",
                 "opacity-0 font-mono",
                 "animate-morph"
               )}
               style={{animationDelay: '100ms'}}
             >
-              Deploy Your <span className="bg-gradient-to-r from-futuristic-purple to-futuristic-blue bg-clip-text text-transparent">Open-Source</span> Stack in{' '}
+              Pin up your <span className="bg-gradient-to-r from-futuristic-purple to-futuristic-blue bg-clip-text text-transparent">open-source</span> stack in{' '}
               <span className="relative inline-block">
-                Minutes
+                minutes
                 <span className="absolute -top-1 -right-1 h-2 w-2 bg-futuristic-neon rounded-full animate-pulse-glow"></span>
               </span>
             </h1>
             <p 
               ref={subheadlineRef}
               className={cn(
-                "max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl text-white text-balance",
+                "max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl text-gray-300 text-balance",
                 "opacity-0"
               )}
               style={{animationDelay: '300ms'}}
             >
-              Get pre-integrated tools like Supabase, Checkmate, Docmost, and Stalwart—with
-              monitoring, SSO, and 24/7 support.
+              Configure and deploy multiple tools with a unified dashboard and seamless integration.
             </p>
             <div 
               ref={ctaRef}
